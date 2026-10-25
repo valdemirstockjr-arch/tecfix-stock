@@ -74,8 +74,8 @@
                 </div>
                 <div class="max-w-2xl relative z-10 space-y-4">
                     <span class="bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Apoio a Microempreendedores</span>
-                    <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white">Manual Visual Definitivo de Bancada</h2>
-                    <p class="text-gray-300 text-sm md:text-base">Manuais rigorosamente auditados com fotos reais e orientações passo a passo para troca de telas e baterias em todas as marcas.</p>
+                    <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white">Manual Completo de Bancada (Início ao Fim)</h2>
+                    <p class="text-gray-300 text-sm md:text-base">Checklists visuais aprofundados para desmontagem, troca de peças, cuidados com cabos flex e remontagem de celulares de todas as marcas.</p>
                     <div class="flex flex-wrap gap-4 pt-2">
                         <button onclick="filterByBrand('all')" class="bg-accent hover:bg-accenthover text-white font-semibold px-6 py-3 rounded-xl transition shadow-lg shadow-accent/20">Ver Todos os Aparelhos</button>
                         <button onclick="showSection('about')" class="bg-gray-800 hover:bg-gray-700 text-gray-200 font-semibold px-6 py-3 rounded-xl transition">Conhecer Fundadores</button>
@@ -269,7 +269,7 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Base de Dados 100% Validada: Apenas Smartphones com Fotos Exatas e Manuais Visuais Completos
+        // Base de Dados Revisada e Auditada: Apenas Smartphones com Fotos Exatas e Checklists Completos
         const devicesData = [
             // ==================== APPLE IPHONES (DO 6 AO 16) ====================
             {
@@ -277,12 +277,14 @@
                 chip: "Apple A18 Pro", ram: "8 GB RAM", battery: "4685 mAh", camera: "48 MP Tripla",
                 image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=600&q=80",
                 stepImg: "https://images.unsplash.com/photo-1591337676887-a217a6970a8a?auto=format&fit=crop&w=600&q=80",
-                tools: "Chave Pentalobe 0.8mm, Separadora térmica a 75°C, Ventosa de alta precisão, Espátula plástica",
-                steps: [
-                    "PASSO 1 (Remoção de Parafusos Base): Desligue totalmente o aparelho. Remova os dois parafusos Pentalobe ladeando a porta USB-C inferior.",
-                    "PASSO 2 (Aquecimento e Abertura Tipo Livro): Aqueça as bordas na separadora. Posicione a ventosa na parte inferior da tela e puxe devagar, abrindo o aparelho exclusivamente para a DIREITA (devido aos cabos flex do display localizados na lateral direita).",
-                    "PASSO 3 (Isolamento de Energia): Remova a blindagem dos conectores internos e desconecte imediatamente o cabo flex da bateria para zerar qualquer risco de curto na placa.",
-                    "PASSO 4 (Troca de Tela/Bateria): Desconecte os flex do display para substituição ou puxe as abas adesivas de tração da bateria para removê-la com segurança."
+                tools: "Chave Pentalobe 0.8mm, Separadora térmica a 75°C, Ventosa de alta precisão, Espátula plástica, Pinça",
+                checklist: [
+                    "FASE 1 - PREPARAÇÃO E ABERTURA: Desligue totalmente o aparelho. Retire os 2 parafusos Pentalobe da base, ao lado da entrada USB-C.",
+                    "FASE 2 - SEPARAÇÃO TÉRMICA: Aqueça o aparelho na separadora a 75°C por 3 minutos para amolecer a cola de vedação perimetral.",
+                    "FASE 3 - PASSAGEM DA ESPÁTULA (TIPO LIVRO): Fixe a ventosa na parte inferior da tela, puxe para criar uma fenda e insira a palheta plástica. Abra o aparelho EXCLUSIVAMENTE para a DIREITA, pois os cabos flex do display estão na lateral direita.",
+                    "FASE 4 - CORTE DE ENERGIA (OBRIGATÓRIO): Remova a blindagem metálica interna com chave específica e desconecte o cabo flex da bateria para zerar qualquer risco de curto na placa.",
+                    "FASE 5 - SUBSTITUIÇÃO DA PEÇA: Desconecte os flex do display para troca de tela, ou puxe as abas adesivas pretas da bateria para removê-la com segurança.",
+                    "FASE 6 - REMONTAGEM E FECHAMENTO: Conecte a nova bateria por último, recoloque todas as blindagens e parafusos, aplique nova cola perimetral T7000/dupla face e feche o aparelho."
                 ]
             },
             {
@@ -290,11 +292,14 @@
                 chip: "Apple A15 Bionic", ram: "6 GB RAM", battery: "3279 mAh", camera: "12 MP Dupla",
                 image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=600&q=80",
                 stepImg: "https://images.unsplash.com/photo-1591337676887-a217a6970a8a?auto=format&fit=crop&w=600&q=80",
-                tools: "Chave Pentalobe, Soprador térmico, Ventosa",
-                steps: [
-                    "PASSO 1: Remova os parafusos Pentalobe da base do aparelho.",
-                    "PASSO 2: Aqueça levemente as bordas com o soprador térmico, fixe a ventosa na parte inferior do vidro e levante a tela com cuidado, abrindo sempre para a DIREITA.",
-                    "PASSO 3: Desparafuse a blindagem da bateria e desconecte o conector de energia antes de remover qualquer outro componente."
+                tools: "Chave Pentalobe, Soprador térmico, Ventosa, Espátula plástica",
+                checklist: [
+                    "FASE 1 - ABERTURA INICIAL: Desligue o celular e remova os dois parafusos inferiores da base.",
+                    "FASE 2 - AQUECIMENTO: Utilize o soprador térmico nas bordas frontais para dissolver a cola de fábrica.",
+                    "FASE 3 - PASSAGEM DA ESPÁTULA: Encaixe a ventosa, puxe o vidro com cuidado e abra a tela para a DIREITA como um livro.",
+                    "FASE 4 - DESCONEXÃO ELÉTRICA: Solte os parafusos da proteção dos conectores e remova o flex da bateria de imediato.",
+                    "FASE 5 - CONSERTO: Troque a tela ou substitua a bateria esgotada.",
+                    "FASE 6 - FECHAMENTO: Encaixe os flex, prenda as blindagens, limpe os restos de cola antiga, aplique nova dupla-face de vedação e feche o aparelho."
                 ]
             },
             {
@@ -303,10 +308,12 @@
                 image: "https://images.unsplash.com/photo-1573148192850-84096f4ef64a?auto=format&fit=crop&w=600&q=80",
                 stepImg: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Soprador térmico, Ventosa, Espátula",
-                steps: [
-                    "PASSO 1: Retire os dois parafusos Pentalobe na base do conector Lightning.",
-                    "PASSO 2: Aqueça a moldura frontal para amolecer a cola de vedação e use a ventosa para abrir a tela como um livro para a direita.",
-                    "PASSO 3: Solte as placas de blindagem interna e desconecte a bateria."
+                checklist: [
+                    "FASE 1 - DESMONTAGEM DA BASE: Remova os parafusos Pentalobe da carcaça inferior.",
+                    "FASE 2 - SOLTURA DA TELA: Aqueça as bordas do aparelho e abra o display para a direita.",
+                    "FASE 3 - SEGURANÇA DA PLACA: Retire a plaqueta de proteção e desconecte a bateria antes de qualquer outro passo.",
+                    "FASE 4 - REPARO: Faça a troca dos componentes necessários.",
+                    "FASE 5 - MONTAGEM FINAL: Reconecte a bateria, feche as blindagens, recoloque a vedação e aperte os parafusos base."
                 ]
             },
             {
@@ -315,10 +322,11 @@
                 image: "https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=600&q=80",
                 stepImg: "https://images.unsplash.com/photo-1530319067432-f2a729c03db5?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Chave Phillips, Soprador térmico",
-                steps: [
-                    "PASSO 1: Remova os parafusos Pentalobe inferiores.",
-                    "PASSO 2 (CUIDADO COM O BOTÃO HOME): Aqueça as bordas e abra a tela para a direita com muito cuidado, pois o cabo flex do Touch ID/Botão Home cruza a parte inferior e pode romper se for puxado.",
-                    "PASSO 3: Desconecte a bateria imediatamente após abrir."
+                checklist: [
+                    "FASE 1 - ABERTURA COM ATENÇÃO AO BOTÃO HOME: Retire os parafusos inferiores, aqueça a cola e abra o aparelho para a direita. CUIDADO: O cabo flex do Botão Home/Touch ID passa na parte inferior e pode rasgar se você puxar forte.",
+                    "FASE 2 - CORTE DE ENERGIA: Desconecte o cabo da bateria logo na abertura.",
+                    "FASE 3 - REPARO: Substitua a tela ou a bateria com segurança.",
+                    "FASE 4 - REMONTAGEM: Reverta o processo com atenção aos encaixes e feche o aparelho."
                 ]
             },
             {
@@ -327,10 +335,11 @@
                 image: "https://images.unsplash.com/photo-1530319067432-f2a729c03db5?auto=format&fit=crop&w=600&q=80",
                 stepImg: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Chave Phillips, Soprador térmico",
-                steps: [
-                    "PASSO 1: Remova os parafusos Pentalobe na base.",
-                    "PASSO 2: Abra a tela lateralmente para a direita, superando a vedação emborrachada de resistência à água.",
-                    "PASSO 3: Desconecte a bateria antes de retirar o display."
+                checklist: [
+                    "FASE 1 - REMOÇÃO DE PARAFUSOS E COLA: Tire os parafusos da base, aqueça as bordas e abra lateralmente para a direita.",
+                    "FASE 2 - PROTEÇÃO CONTRA CURTO: Remova a blindagem e desconecte a bateria.",
+                    "FASE 3 - EXECUÇÃO DO CONSERTO: Troque a peça danificada.",
+                    "FASE 4 - FECHAMENTO: Recoloque os componentes, limpe e feche a carcaça."
                 ]
             },
             {
@@ -339,10 +348,11 @@
                 image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
                 stepImg: "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Chave Phillips, Ventosa",
-                steps: [
-                    "PASSO 1: Remova os parafusos Pentalobe ao lado do conector de carga.",
-                    "PASSO 2: Use a ventosa para puxar a tela para cima, lembrando que o cabo do Touch ID prende a tela na placa na parte inferior.",
-                    "PASSO 3: Desconecte a bateria e remova as blindagens metálicas."
+                checklist: [
+                    "FASE 1 - ABERTURA INICIAL: Remova os parafusos inferiores e puxe a tela com a ventosa.",
+                    "FASE 2 - DESCONEXÃO: Desconecte a bateria e os flex do display.",
+                    "FASE 3 - REPARO: Realize a manutenção desejada.",
+                    "FASE 4 - FECHAMENTO: Encaixe a tela com cuidado e parafuse a base."
                 ]
             },
 
@@ -353,11 +363,27 @@
                 image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80",
                 stepImg: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80",
                 tools: "Separadora térmica a 80°C, Ventosa, Chave Phillips 00, Álcool Isopropílico 99%",
-                steps: [
-                    "PASSO 1: Desligue o aparelho e remova a S-Pen.",
-                    "PASSO 2: Posicione na separadora térmica a 80°C por 3 minutos para amolecer a cola traseira.",
-                    "PASSO 3: Insira a lâmina plástica fina e aplique álcool isopropílico. ATENÇÃO: Cuidado com o cabo flex do carregador sem fio colado no centro da tampa traseira.",
-                    "PASSO 4: Remova a blindagem superior e desconecte a bateria antes de mexer na tela."
+                checklist: [
+                    "FASE 1 - PREPARAÇÃO: Desligue o celular e remova a S-Pen e a gaveta do chip.",
+                    "FASE 2 - AQUECIMENTO DA TAMPA: Coloque na separadora térmica a 80°C por 3 minutos para amolecer a cola traseira.",
+                    "FASE 3 - PASSAGEM DA ESPÁTULA (CUIDADO COM O FLEX CENTRAL): Insira a lâmina plástica na parte inferior. ATENÇÃO: O cabo flex do carregador sem fio fica colado no meio da tampa; passe a espátula bem rente à borda para não cortá-lo.",
+                    "FASE 4 - CORTE DE ENERGIA: Remova os parafusos da blindagem superior e desconecte a bateria.",
+                    "FASE 5 - CONSERTO: Faça a troca da tela ou da bateria.",
+                    "FASE 6 - REMONTAGEM: Inverta o processo, aplique nova cola traseira e pressione com grampos de bancada."
+                ]
+            },
+            {
+                id: 102, brand: "Samsung", name: "Galaxy S23+",
+                chip: "Snapdragon 8 Gen 2", ram: "8 GB RAM", battery: "4700 mAh", camera: "50 MP Tripla",
+                image: "https://images.unsplash.com/photo-1610945264803-c22b64d2a7b3?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Ventosa, Espátula plástica, Chave Phillips 00",
+                checklist: [
+                    "FASE 1 - ABERTURA: Desligue o aparelho, remova a gaveta SIM e aqueça a tampa traseira com o soprador térmico.",
+                    "FASE 2 - REMOÇÃO DA TAMPA: Levante com a ventosa, passe a espátula com cuidado (atento ao flex biométrico) e retire a tampa.",
+                    "FASE 3 - SEGURANÇA: Desconecte imediatamente o conector da bateria.",
+                    "FASE 4 - REPARO: Substitua o componente avariado.",
+                    "FASE 5 - FECHAMENTO: Recoloque as proteções e cole a tampa traseira."
                 ]
             },
             {
@@ -366,10 +392,12 @@
                 image: "https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?auto=format&fit=crop&w=600&q=80",
                 stepImg: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Chave Phillips 00, Espátula de nylon",
-                steps: [
-                    "PASSO 1: Desligue o aparelho e remova a gaveta SIM.",
-                    "PASSO 2: Aqueça as bordas traseiras por 2 minutos.",
-                    "PASSO 3: Passe a espátula plástica com cuidado para soltar a tampa traseira sem danificar os componentes internos."
+                checklist: [
+                    "FASE 1 - DESMONTAGEM INICIAL: Desligue o celular, retire o chip e aqueça as bordas traseiras.",
+                    "FASE 2 - DESCOLAGEM: Insira a espátula de nylon e abra a tampa traseira.",
+                    "FASE 3 - ENERGIA: Desconecte a bateria antes de manusear a placa.",
+                    "FASE 4 - MANUTENÇÃO: Execute a troca da tela ou bateria.",
+                    "FASE 5 - MONTAGEM: Limpe os resíduos, aplique cola nova e feche o aparelho."
                 ]
             },
 
@@ -380,10 +408,12 @@
                 image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
                 stepImg: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Chave Torx T3, Espátula plástica",
-                steps: [
-                    "PASSO 1: Desligue o smartphone e aqueça a tampa traseira curva.",
-                    "PASSO 2: Utilize a ventosa para criar uma pequena fenda e deslize a palheta plástica.",
-                    "PASSO 3: ATENÇÃO: O cabo flex do leitor de digital fica preso na tampa traseira; abra com cuidado para não rompê-lo."
+                checklist: [
+                    "FASE 1 - ABERTURA DA TAMPA CURVA: Desligue o aparelho e aqueça a tampa traseira de vidro curvo.",
+                    "FASE 2 - CUIDADO COM BIOMETRIA: Abra com a ventosa e espátula, mas ATENÇÃO: o flex da digital está preso na tampa; desencaixe-o com cuidado extremo antes de puxar.",
+                    "FASE 3 - DESCONEXÃO DA BATERIA: Solte a blindagem interna e isole a bateria.",
+                    "FASE 4 - REPARO: Faça a troca da peça necessária.",
+                    "FASE 5 - FECHAMENTO: Reconecte a biometria, feche as blindagens e cole a tampa."
                 ]
             },
             {
@@ -392,10 +422,12 @@
                 image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80",
                 stepImg: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Chave Phillips 00, Espátula de nylon",
-                steps: [
-                    "PASSO 1: Desligue o aparelho e retire o chip.",
-                    "PASSO 2: Aqueça a tampa traseira para soltar o adesivo perimetral.",
-                    "PASSO 3: Retire os parafusos da blindagem e isole imediatamente o conector da bateria."
+                checklist: [
+                    "FASE 1 - PREPARO: Desligue o smartphone e retire o suporte SIM.",
+                    "FASE 2 - AQUECIMENTO E CORTE DE COLA: Aqueça o perímetro traseiro e passe a palheta plástica.",
+                    "FASE 3 - SEGURANÇA DA PLACA: Retire os parafusos da proteção interna e desconecte a bateria.",
+                    "FASE 4 - EXECUÇÃO: Substitua o display ou a bateria.",
+                    "FASE 5 - REMONTAGEM: Inverta as etapas e feche o aparelho."
                 ]
             },
 
@@ -406,10 +438,12 @@
                 image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
                 stepImg: "https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Kit chaves Xiaomi Precision, Pinça curvada",
-                steps: [
-                    "PASSO 1: Desligue o aparelho e retire a gaveta SIM.",
-                    "PASSO 2: Aqueça a tampa traseira uniformemente.",
-                    "PASSO 3: Puxe com a ventosa e introduza a espátula plástica nas bordas com cuidado."
+                checklist: [
+                    "FASE 1 - ABERTURA: Desligue o aparelho, remova a gaveta do chip e aqueça a tampa traseira uniformemente.",
+                    "FASE 2 - DESCOLAGEM: Puxe com a ventosa e introduza a espátula plástica nas bordas com cautela.",
+                    "FASE 3 - ISOLAMENTO: Desconecte o flex da bateria antes de mexer na placa.",
+                    "FASE 4 - REPARO: Troque a peça danificada.",
+                    "FASE 5 - FECHAMENTO: Recoloque as proteções e fixe a tampa traseira."
                 ]
             },
 
@@ -420,10 +454,12 @@
                 image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80",
                 stepImg: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Ventosa, Chave Phillips, Álcool isopropílico",
-                steps: [
-                    "PASSO 1: Desligue o LG Velvet e remova a bandeja SIM.",
-                    "PASSO 2: Aplique calor na tampa traseira de vidro curvado.",
-                    "PASSO 3: Insira a ventosa e levante cautelosamente enquanto passa a espátula para dissolver a cola."
+                checklist: [
+                    "FASE 1 - ABERTURA: Desligue o LG Velvet, remova a bandeja SIM e aplique calor na tampa traseira de vidro curvado.",
+                    "FASE 2 - ESPÁTULA: Insira a ventosa e levante cautelosamente enquanto passa a espátula para dissolver a cola.",
+                    "FASE 3 - SEGURANÇA: Desconecte a bateria para evitar curtos.",
+                    "FASE 4 - MANUTENÇÃO: Realize a troca do componente.",
+                    "FASE 5 - REMONTAGEM: Limpe a cola velha e cole novamente."
                 ]
             },
             {
@@ -432,10 +468,11 @@
                 image: "https://images.unsplash.com/photo-1526406915894-7bcd65f60845?auto=format&fit=crop&w=600&q=80",
                 stepImg: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Chave Phillips 00, Espátula plástica",
-                steps: [
-                    "PASSO 1: Desligue o aparelho e retire o chip.",
-                    "PASSO 2: Aqueça e remova a tampa traseira plástica desencaixando as presilhas laterais com espátula.",
-                    "PASSO 3: Retire os parafusos da proteção interna da placa e desconecte a bateria."
+                checklist: [
+                    "FASE 1 - ABERTURA DA TAMPA PLÁSTICA: Desligue o aparelho, tire o chip e aqueça levemente. Desencaixe as presilhas laterais com espátula plástica.",
+                    "FASE 2 - DESCONEXÃO: Retire os parafusos da proteção interna da placa e desconecte a bateria.",
+                    "FASE 3 - REPARO: Substitua a tela ou a bateria.",
+                    "FASE 4 - FECHAMENTO: Encaixe a tampa traseira pressionando as presilhas até o clique."
                 ]
             }
         ];
@@ -503,8 +540,8 @@
                                 </div>
                             </div>
                             <button onclick="openDeviceModal(${dev.id})" class="w-full bg-darkbg hover:bg-gray-800 border border-gray-700 text-white font-semibold py-2.5 rounded-xl text-sm transition flex items-center justify-center space-x-2">
-                                <i class="fa-solid fa-book-open text-accent"></i>
-                                <span>Ver Ficha & Guia Visual</span>
+                                <i class="fa-solid fa-list-check text-accent"></i>
+                                <span>Ver Checklist & Manual Completo</span>
                             </button>
                         </div>
                     </div>
@@ -537,17 +574,19 @@
             showSection('home');
         }
 
-        // Modal Detalhes do Aparelho & Guia Visual Aprofundado
+        // Modal Detalhes do Aparelho & Checklist Completo com Imagens Visuais
         function openDeviceModal(id) {
             const dev = devicesData.find(d => d.id === id);
             if (!dev) return;
 
-            let stepsHtml = '';
-            dev.steps.forEach((step, index) => {
-                stepsHtml += `
-                    <div class="flex items-start space-x-3 bg-darkbg p-3.5 rounded-xl border border-gray-800">
-                        <span class="w-6 h-6 rounded-full bg-accent text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">${index + 1}</span>
-                        <p class="text-sm text-gray-300 leading-relaxed">${step}</p>
+            let checklistHtml = '';
+            dev.checklist.forEach((item, index) => {
+                checklistHtml += `
+                    <div class="flex items-start space-x-3 bg-darkbg p-4 rounded-xl border border-gray-800">
+                        <div class="w-7 h-7 rounded-lg bg-accent/20 text-accent font-bold flex items-center justify-center shrink-0 mt-0.5 text-xs">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <p class="text-sm text-gray-200 leading-relaxed font-medium">${item}</p>
                     </div>
                 `;
             });
@@ -578,19 +617,19 @@
 
                 <!-- GUIA VISUAL DE BANCADA -->
                 <div class="space-y-3">
-                    <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400"><i class="fa-solid fa-image text-accent mr-2"></i> Ilustração / Esquema de Bancada do Aparelho</h3>
-                    <div class="rounded-xl overflow-hidden border border-gray-800 h-52 bg-gray-900 relative">
-                        <img src="${dev.stepImg || dev.image}" alt="Esquema de manutenção ${dev.name}" class="w-full h-full object-cover opacity-90">
-                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-darkbg via-darkbg/70 to-transparent p-3 text-center">
-                            <span class="text-xs text-gray-300 font-medium"><i class="fa-solid fa-circle-info text-accent mr-1"></i> Visualização orientativa para abertura e manuseio do ${dev.name}</span>
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400"><i class="fa-solid fa-image text-accent mr-2"></i> Esquema Visual de Referência (Abertura e Bancada)</h3>
+                    <div class="rounded-xl overflow-hidden border border-gray-800 h-56 bg-gray-900 relative">
+                        <img src="${dev.stepImg || dev.image}" alt="Esquema visual ${dev.name}" class="w-full h-full object-cover opacity-90">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-darkbg via-darkbg/80 to-transparent p-3 text-center">
+                            <span class="text-xs text-gray-200 font-semibold"><i class="fa-solid fa-eye text-accent mr-1"></i> Visualização orientativa para apoio durante o procedimento no ${dev.name}</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="space-y-3">
-                    <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400"><i class="fa-solid fa-list-check text-accent mr-2"></i> Passo a Passo Detalhado de Manutenção</h3>
-                    <div class="space-y-2">
-                        ${stepsHtml}
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400"><i class="fa-solid fa-clipboard-list text-accent mr-2"></i> Checklist Completo (Início, Reparo e Remontagem)</h3>
+                    <div class="space-y-3">
+                        ${checklistHtml}
                     </div>
                 </div>
             `;
@@ -712,7 +751,7 @@
             renderInventory();
         }
 
-        // Inicialização
+        // Initialization
         window.onload = function() {
             renderDevices(devicesData);
             renderTools();
