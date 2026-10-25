@@ -1,5 +1,846 @@
 <!DOCTYPE html>
+<html lang="pt-BR"><!DOCTYPE html>
 <html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecfix Stock - Manutenção e Fichas Técnicas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0b0f19',
+                        cardbg: '#131c2e',
+                        accent: '#ef4444',
+                        accenthover: '#dc2626'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darkbg text-gray-100 font-sans antialiased min-h-screen flex flex-col selection:bg-accent selection:text-white">
+
+    <!-- HEADER / NAV -->
+    <header class="sticky top-0 z-50 bg-darkbg/95 backdrop-blur border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showSection('home')">
+                <div class="w-10 h-10 rounded-xl bg-accent flex items-center justify-center text-white shadow-lg shadow-accent/30">
+                    <i class="fa-solid fa-screwdriver-wrench text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-black tracking-wider text-white">TECFIX <span class="text-accent">STOCK</span></h1>
+                    <p class="text-xs text-gray-400">Manutenção & Fichas Técnicas</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                <button onclick="showSection('home')" class="hover:text-accent transition">Início & Catálogo</button>
+                <button onclick="showSection('toolbox')" class="hover:text-accent transition">Ferramental</button>
+                <button onclick="showSection('budget')" class="hover:text-accent transition">Simulador Orçamento</button>
+                <button onclick="showSection('inventory')" class="hover:text-accent transition">Estoque Peças</button>
+                <button onclick="showSection('about')" class="hover:text-accent transition">Sobre & Fundadores</button>
+            </nav>
+            <div class="flex items-center space-x-3">
+                <div class="relative hidden sm:block">
+                    <input type="text" id="globalSearch" placeholder="Buscar aparelho..." onkeyup="filterDevices()" class="bg-cardbg border border-gray-700 rounded-lg px-4 py-2 text-sm text-white focus:outline-none focus:border-accent w-48 lg:w-64">
+                    <i class="fa-solid fa-search absolute right-3 top-3 text-gray-400 text-sm"></i>
+                </div>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-cardbg border-b border-gray-800 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="showSection('home'); toggleMobileMenu();" class="block w-full text-left py-2 hover:text-accent">Início & Catálogo</button>
+            <button onclick="showSection('toolbox'); toggleMobileMenu();" class="block w-full text-left py-2 hover:text-accent">Ferramental</button>
+            <button onclick="showSection('budget'); toggleMobileMenu();" class="block w-full text-left py-2 hover:text-accent">Simulador Orçamento</button>
+            <button onclick="showSection('inventory'); toggleMobileMenu();" class="block w-full text-left py-2 hover:text-accent">Estoque Peças</button>
+            <button onclick="showSection('about'); toggleMobileMenu();" class="block w-full text-left py-2 hover:text-accent">Sobre & Fundadores</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+        <!-- SECTION: HOME / CATALOG -->
+        <section id="sec-home" class="space-y-8">
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-cardbg to-gray-900 border border-gray-800 rounded-2xl p-8 md:p-12 shadow-xl relative overflow-hidden">
+                <div class="absolute right-0 bottom-0 opacity-10 translate-x-10 translate-y-10 pointer-events-none">
+                    <i class="fa-solid fa-mobile-screen-button text-9xl text-white"></i>
+                </div>
+                <div class="max-w-2xl relative z-10 space-y-4">
+                    <span class="bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Apoio a Microempreendedores</span>
+                    <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white">Manual Completo Multimarcas (Início ao Fim)</h2>
+                    <p class="text-gray-300 text-sm md:text-base">Catálogo expandido com dezenas de aparelhos de Samsung, Apple (iPhone 6 ao 16), Motorola, Xiaomi e LG, acompanhados de checklists e guias visuais de bancada.</p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <button onclick="filterByBrand('all')" class="bg-accent hover:bg-accenthover text-white font-semibold px-6 py-3 rounded-xl transition shadow-lg shadow-accent/20">Ver Todos os Aparelhos</button>
+                        <button onclick="showSection('about')" class="bg-gray-800 hover:bg-gray-700 text-gray-200 font-semibold px-6 py-3 rounded-xl transition">Conhecer Fundadores</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand Filters -->
+            <div class="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none">
+                <button onclick="filterByBrand('all')" class="brand-btn active-brand bg-accent text-white px-5 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition shadow">Todos</button>
+                <button onclick="filterByBrand('Samsung')" class="brand-btn bg-cardbg hover:bg-gray-800 text-gray-300 px-5 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition border border-gray-800">Samsung</button>
+                <button onclick="filterByBrand('Apple')" class="brand-btn bg-cardbg hover:bg-gray-800 text-gray-300 px-5 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition border border-gray-800">Apple (iPhone)</button>
+                <button onclick="filterByBrand('Motorola')" class="brand-btn bg-cardbg hover:bg-gray-800 text-gray-300 px-5 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition border border-gray-800">Motorola</button>
+                <button onclick="filterByBrand('Xiaomi')" class="brand-btn bg-cardbg hover:bg-gray-800 text-gray-300 px-5 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition border border-gray-800">Xiaomi</button>
+                <button onclick="filterByBrand('LG')" class="brand-btn bg-cardbg hover:bg-gray-800 text-gray-300 px-5 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition border border-gray-800">LG</button>
+            </div>
+
+            <!-- Devices Grid -->
+            <div id="devicesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Preenchido via JavaScript -->
+            </div>
+        </section>
+
+        <!-- SECTION: TOOLBOX -->
+        <section id="sec-toolbox" class="hidden space-y-6">
+            <div class="border-b border-gray-800 pb-4">
+                <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-toolbox text-accent mr-2"></i> Ferramental de Bancada</h2>
+                <p class="text-sm text-gray-400">Equipamentos essenciais para iniciar com segurança na manutenção de celulares.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="toolsGrid">
+                <!-- Conteúdo gerado via JS -->
+            </div>
+        </section>
+
+        <!-- SECTION: BUDGET SIMULATOR -->
+        <section id="sec-budget" class="hidden space-y-6 max-w-2xl mx-auto">
+            <div class="border-b border-gray-800 pb-4 text-center">
+                <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-calculator text-accent mr-2"></i> Simulador de Orçamento</h2>
+                <p class="text-sm text-gray-400">Calcule o preço de venda sugerido para seus serviços de reparo.</p>
+            </div>
+            <div class="bg-cardbg border border-gray-800 rounded-2xl p-6 md:p-8 space-y-4 shadow-xl">
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1">Custo da Peça (R$)</label>
+                    <input type="number" id="costPart" placeholder="Ex: 120.00" class="w-full bg-darkbg border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1">Tempo Estimado de Mão de Obra (Horas)</label>
+                    <input type="number" id="costHours" placeholder="Ex: 1" class="w-full bg-darkbg border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1">Valor da Hora Técnica (R$)</label>
+                    <input type="number" id="hourRate" value="60" class="w-full bg-darkbg border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1">Margem de Lucro Desejada (%)</label>
+                    <input type="number" id="profitMargin" value="40" class="w-full bg-darkbg border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent">
+                </div>
+                <button onclick="calculateBudget()" class="w-full bg-accent hover:bg-accenthover text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-accent/20">Calcular Orçamento Sugerido</button>
+                <div id="budgetResult" class="hidden mt-6 p-4 bg-darkbg border border-gray-700 rounded-xl space-y-2">
+                    <!-- Resultado -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: INVENTORY -->
+        <section id="sec-inventory" class="hidden space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-800 pb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-boxes-stacked text-accent mr-2"></i> Controle de Estoque Rápido</h2>
+                    <p class="text-sm text-gray-400">Gerencie telas, baterias e componentes em sua bancada.</p>
+                </div>
+                <button onclick="openAddPartModal()" class="bg-accent hover:bg-accenthover text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition flex items-center space-x-2">
+                    <i class="fa-solid fa-plus"></i><span>Nova Peça</span>
+                </button>
+            </div>
+            <div class="bg-cardbg border border-gray-800 rounded-2xl overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-900/60 border-b border-gray-800 text-xs text-gray-400 uppercase tracking-wider">
+                                <th class="p-4">Item / Peça</th>
+                                <th class="p-4">Modelo Compatível</th>
+                                <th class="p-4">Qtd. Estoque</th>
+                                <th class="p-4">Preço Custo</th>
+                                <th class="p-4">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody" class="divide-y divide-gray-800 text-sm">
+                            <!-- Preenchido via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: ABOUT & FOUNDERS -->
+        <section id="sec-about" class="hidden space-y-8 max-w-4xl mx-auto">
+            <div class="border-b border-gray-800 pb-4 text-center">
+                <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-users text-accent mr-2"></i> Sobre o Tecfix Stock & Fundadores</h2>
+                <p class="text-sm text-gray-400">Nossa missão e idealizadores.</p>
+            </div>
+            <div class="bg-cardbg border border-gray-800 rounded-2xl p-8 space-y-6 shadow-xl">
+                <div class="space-y-3">
+                    <h3 class="text-xl font-bold text-white">Nossa Proposta</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        O <strong>Tecfix Stock</strong> nasceu com o propósito firme de <strong>ajudar microempreendedores e pessoas que estão iniciando no ramo de manutenção de celulares</strong>. Fornecemos fichas técnicas detalhadas e manuais práticos de bancada para que qualquer técnico iniciante possa realizar trocas de tela, substituição de baterias e diagnósticos com total segurança, precisão e profissionalismo.
+                    </p>
+                </div>
+                <div class="border-t border-gray-800 pt-6">
+                    <h3 class="text-xl font-bold text-white mb-6">Idealizadores e Fundadores</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="bg-darkbg border border-gray-800 p-6 rounded-xl flex items-center space-x-4">
+                            <div class="w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center text-accent text-2xl font-black">
+                                V
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white">Valdemir Stock</h4>
+                                <p class="text-xs text-accent uppercase tracking-wider font-semibold">Co-Fundador & Estrategista</p>
+                            </div>
+                        </div>
+                        <div class="bg-darkbg border border-gray-800 p-6 rounded-xl flex items-center space-x-4">
+                            <div class="w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center text-accent text-2xl font-black">
+                                W
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white">Wesley Nunes Stock</h4>
+                                <p class="text-xs text-accent uppercase tracking-wider font-semibold">Co-Fundador & Técnico Especialista</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL: DETALHES DO APARELHO & GUIA DE MANUTENÇÃO -->
+    <div id="deviceModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-cardbg border border-gray-800 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 space-y-6 relative shadow-2xl">
+            <button onclick="closeDeviceModal()" class="absolute right-4 top-4 text-gray-400 hover:text-white bg-darkbg p-2 rounded-xl border border-gray-800">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div id="modalContent" class="space-y-6">
+                <!-- Conteúdo injetado via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ADICIONAR PEÇA NO ESTOQUE -->
+    <div id="partModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-cardbg border border-gray-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
+            <h3 class="text-lg font-bold text-white">Adicionar Peça ao Estoque</h3>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1">Nome do Item</label>
+                    <input type="text" id="partName" placeholder="Ex: Tela Frontal OLED" class="w-full bg-darkbg border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-accent">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1">Modelo Compatível</label>
+                    <input type="text" id="partModel" placeholder="Ex: iPhone 11" class="w-full bg-darkbg border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-accent">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1">Quantidade</label>
+                        <input type="number" id="partQty" value="1" class="w-full bg-darkbg border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-accent">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1">Preço Custo (R$)</label>
+                        <input type="number" id="partPrice" placeholder="0.00" class="w-full bg-darkbg border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-accent">
+                    </div>
+                </div>
+            </div>
+            <div class="flex space-x-3 pt-2">
+                <button onclick="closeAddPartModal()" class="flex-1 bg-gray-800 hover:bg-gray-700 text-gray-300 font-semibold py-2.5 rounded-xl text-sm transition">Cancelar</button>
+                <button onclick="saveNewPart()" class="flex-1 bg-accent hover:bg-accenthover text-white font-semibold py-2.5 rounded-xl text-sm transition">Salvar Peça</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-darkbg border-t border-gray-800 mt-16 py-8 text-center text-sm text-gray-400 space-y-3">
+        <div class="flex items-center justify-center space-x-2">
+            <div class="w-6 h-6 rounded-lg bg-accent flex items-center justify-center text-white text-xs">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+            </div>
+            <span class="font-bold text-white tracking-wider">TECFIX STOCK</span>
+        </div>
+        <p>Apoio Técnico para Microempreendedores &bull; Fundado por Valdemir Stock & Wesley Nunes Stock</p>
+        <p class="text-xs text-gray-600">&copy; 2026 Tecfix Stock. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Base de Dados Completa e Expandida Multimarcas (Samsung, Apple, Motorola, Xiaomi, LG)
+        const devicesData = [
+            // ==================== APPLE IPHONES (DO 6 AO 16) ====================
+            {
+                id: 216, brand: "Apple", name: "iPhone 16 Pro Max",
+                chip: "Apple A18 Pro", ram: "8 GB RAM", battery: "4685 mAh", camera: "48 MP Tripla",
+                image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1591337676887-a217a6970a8a?auto=format&fit=crop&w=600&q=80",
+                tools: "Chave Pentalobe 0.8mm, Separadora térmica a 75°C, Ventosa de alta precisão, Espátula plástica, Pinça",
+                checklist: [
+                    "FASE 1 - PREPARAÇÃO E ABERTURA: Desligue totalmente o aparelho. Retire os 2 parafusos Pentalobe da base, ao lado da entrada USB-C.",
+                    "FASE 2 - SEPARAÇÃO TÉRMICA: Aqueça o aparelho na separadora a 75°C por 3 minutos para amolecer a cola de vedação perimetral.",
+                    "FASE 3 - PASSAGEM DA ESPÁTULA (TIPO LIVRO): Fixe a ventosa na parte inferior da tela, puxe para criar uma fenda e insira a palheta plástica. Abra o aparelho EXCLUSIVAMENTE para a DIREITA, pois os cabos flex do display estão na lateral direita.",
+                    "FASE 4 - CORTE DE ENERGIA (OBRIGATÓRIO): Remova a blindagem metálica interna com chave específica e desconecte o cabo flex da bateria para zerar qualquer risco de curto na placa.",
+                    "FASE 5 - SUBSTITUIÇÃO DA PEÇA: Desconecte os flex do display para troca de tela, ou puxe as abas adesivas pretas da bateria para removê-la com segurança.",
+                    "FASE 6 - REMONTAGEM E FECHAMENTO: Conecte a nova bateria por último, recoloque todas as blindagens e parafusos, aplique nova cola perimetral T7000/dupla face e feche o aparelho."
+                ]
+            },
+            {
+                id: 214, brand: "Apple", name: "iPhone 14",
+                chip: "Apple A15 Bionic", ram: "6 GB RAM", battery: "3279 mAh", camera: "12 MP Dupla",
+                image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1591337676887-a217a6970a8a?auto=format&fit=crop&w=600&q=80",
+                tools: "Chave Pentalobe, Soprador térmico, Ventosa, Espátula plástica",
+                checklist: [
+                    "FASE 1 - ABERTURA INICIAL: Desligue o celular e remova os dois parafusos inferiores da base.",
+                    "FASE 2 - AQUECIMENTO: Utilize o soprador térmico nas bordas frontais para dissolver a cola de fábrica.",
+                    "FASE 3 - PASSAGEM DA ESPÁTULA: Encaixe a ventosa, puxe o vidro com cuidado e abra a tela para a DIREITA como um livro.",
+                    "FASE 4 - DESCONEXÃO ELÉTRICA: Solte os parafusos da proteção dos conectores e remova o flex da bateria de imediato.",
+                    "FASE 5 - CONSERTO: Troque a tela ou substitua a bateria esgotada.",
+                    "FASE 6 - FECHAMENTO: Encaixe os flex, prenda as blindagens, limpe os restos de cola antiga, aplique nova dupla-face de vedação e feche o aparelho."
+                ]
+            },
+            {
+                id: 211, brand: "Apple", name: "iPhone 11",
+                chip: "Apple A13 Bionic", ram: "4 GB RAM", battery: "3110 mAh", camera: "12 MP Dupla",
+                image: "https://images.unsplash.com/photo-1573148192850-84096f4ef64a?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
+                tools: "Chave Pentalobe, Soprador térmico, Ventosa, Espátula",
+                checklist: [
+                    "FASE 1 - DESMONTAGEM DA BASE: Remova os parafusos Pentalobe da carcaça inferior.",
+                    "FASE 2 - SOLTURA DA TELA: Aqueça as bordas do aparelho e abra o display para a direita.",
+                    "FASE 3 - SEGURANÇA DA PLACA: Retire a plaqueta de proteção e desconecte a bateria antes de qualquer outro passo.",
+                    "FASE 4 - REPARO: Faça a troca dos componentes necessários.",
+                    "FASE 5 - MONTAGEM FINAL: Reconecte a bateria, feche as blindagens, recoloque a vedação e aperte os parafusos base."
+                ]
+            },
+            {
+                id: 208, brand: "Apple", name: "iPhone 8",
+                chip: "Apple A11 Bionic", ram: "2 GB RAM", battery: "1821 mAh", camera: "12 MP",
+                image: "https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1530319067432-f2a729c03db5?auto=format&fit=crop&w=600&q=80",
+                tools: "Chave Pentalobe, Chave Phillips, Soprador térmico",
+                checklist: [
+                    "FASE 1 - ABERTURA COM ATENÇÃO AO BOTÃO HOME: Retire os parafusos inferiores, aqueça a cola e abra o aparelho para a direita. CUIDADO: O cabo flex do Botão Home/Touch ID passa na parte inferior e pode rasgar se você puxar forte.",
+                    "FASE 2 - CORTE DE ENERGIA: Desconecte o cabo da bateria logo na abertura.",
+                    "FASE 3 - REPARO: Substitua a tela ou a bateria com segurança.",
+                    "FASE 4 - REMONTAGEM: Reverta o processo com atenção aos encaixes e feche o aparelho."
+                ]
+            },
+            {
+                id: 207, brand: "Apple", name: "iPhone 7",
+                chip: "Apple A10 Fusion", ram: "2 GB RAM", battery: "1960 mAh", camera: "12 MP",
+                image: "https://images.unsplash.com/photo-1530319067432-f2a729c03db5?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
+                tools: "Chave Pentalobe, Chave Phillips, Soprador térmico",
+                checklist: [
+                    "FASE 1 - REMOÇÃO DE PARAFUSOS E COLA: Tire os parafusos da base, aqueça as bordas e abra lateralmente para a direita.",
+                    "FASE 2 - PROTEÇÃO CONTRA CURTO: Remova a blindagem e desconecte a bateria.",
+                    "FASE 3 - EXECUÇÃO DO CONSERTO: Troque a peça danificada.",
+                    "FASE 4 - FECHAMENTO: Recoloque os componentes, limpe e feche a carcaça."
+                ]
+            },
+            {
+                id: 206, brand: "Apple", name: "iPhone 6",
+                chip: "Apple A8", ram: "1 GB RAM", battery: "1810 mAh", camera: "8 MP",
+                image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=600&q=80",
+                tools: "Chave Pentalobe, Chave Phillips, Ventosa",
+                checklist: [
+                    "FASE 1 - ABERTURA INICIAL: Remova os parafusos inferiores e puxe a tela com a ventosa.",
+                    "FASE 2 - DESCONEXÃO: Desconecte a bateria e os flex do display.",
+                    "FASE 3 - REPARO: Realize a manutenção desejada.",
+                    "FASE 4 - FECHAMENTO: Encaixe a tela com cuidado e parafuse a base."
+                ]
+            },
+
+            // ==================== SAMSUNG ====================
+            {
+                id: 101, brand: "Samsung", name: "Galaxy S24 Ultra",
+                chip: "Snapdragon 8 Gen 3", ram: "12 GB RAM", battery: "5000 mAh", camera: "200 MP Quádrupla",
+                image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80",
+                tools: "Separadora térmica a 80°C, Ventosa, Chave Phillips 00, Álcool Isopropílico 99%",
+                checklist: [
+                    "FASE 1 - PREPARAÇÃO: Desligue o celular e remova a S-Pen e a gaveta do chip.",
+                    "FASE 2 - AQUECIMENTO DA TAMPA: Coloque na separadora térmica a 80°C por 3 minutos para amolecer a cola traseira.",
+                    "FASE 3 - PASSAGEM DA ESPÁTULA (CUIDADO COM O FLEX CENTRAL): Insira a lâmina plástica na parte inferior. ATENÇÃO: O cabo flex do carregador sem fio fica colado no meio da tampa; passe a espátula bem rente à borda para não cortá-lo.",
+                    "FASE 4 - CORTE DE ENERGIA: Remova os parafusos da blindagem superior e desconecte a bateria.",
+                    "FASE 5 - CONSERTO: Faça a troca da tela ou da bateria.",
+                    "FASE 6 - REMONTAGEM: Inverta o processo, aplique nova cola traseira e pressione com grampos de bancada."
+                ]
+            },
+            {
+                id: 102, brand: "Samsung", name: "Galaxy S23+",
+                chip: "Snapdragon 8 Gen 2", ram: "8 GB RAM", battery: "4700 mAh", camera: "50 MP Tripla",
+                image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Ventosa, Espátula plástica, Chave Phillips 00",
+                checklist: [
+                    "FASE 1 - ABERTURA: Desligue o aparelho, remova a gaveta SIM e aqueça a tampa traseira com o soprador térmico.",
+                    "FASE 2 - REMOÇÃO DA TAMPA: Levante com a ventosa, passe a espátula com cuidado (atento ao flex biométrico) e retire a tampa.",
+                    "FASE 3 - SEGURANÇA: Desconecte imediatamente o conector da bateria.",
+                    "FASE 4 - REPARO: Substitua o componente avariado.",
+                    "FASE 5 - FECHAMENTO: Recoloque as proteções e cole a tampa traseira."
+                ]
+            },
+            {
+                id: 103, brand: "Samsung", name: "Galaxy S22",
+                chip: "Snapdragon 8 Gen 1", ram: "8 GB RAM", battery: "3700 mAh", camera: "50 MP Tripla",
+                image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Phillips 00, Espátula plástica",
+                checklist: [
+                    "FASE 1 - ABERTURA: Desligue o aparelho, aqueça a tampa traseira de vidro e remova com ventosa.",
+                    "FASE 2 - ISOLAMENTO: Desconecte a bateria para evitar curto-circuitos.",
+                    "FASE 3 - REPARO: Substitua a peça necessária.",
+                    "FASE 4 - FECHAMENTO: Limpe a cola antiga, aplique nova dupla-face e feche a tampa."
+                ]
+            },
+            {
+                id: 104, brand: "Samsung", name: "Galaxy A55",
+                chip: "Exynos 1480", ram: "8 GB RAM", battery: "5000 mAh", camera: "50 MP Tripla",
+                image: "https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Phillips 00, Espátula de nylon",
+                checklist: [
+                    "FASE 1 - DESMONTAGEM INICIAL: Desligue o celular, retire o chip e aqueça as bordas traseiras.",
+                    "FASE 2 - DESCOLAGEM: Insira a espátula de nylon e abra a tampa traseira.",
+                    "FASE 3 - ENERGIA: Desconecte a bateria antes de manusear a placa.",
+                    "FASE 4 - MANUTENÇÃO: Execute a troca da tela ou bateria.",
+                    "FASE 5 - MONTAGEM: Limpe os resíduos, aplique cola nova e feche o aparelho."
+                ]
+            },
+            {
+                id: 105, brand: "Samsung", name: "Galaxy A34",
+                chip: "MediaTek Dimensity 1080", ram: "8 GB RAM", battery: "5000 mAh", camera: "48 MP Tripla",
+                image: "https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Phillips 00, Espátula plástica",
+                checklist: [
+                    "FASE 1 - ABERTURA: Aqueça a tampa traseira de plástico rígido e remova com auxílio de ventosa e espátula.",
+                    "FASE 2 - SEGURANÇA: Solte os parafusos da blindagem e desconecte a bateria.",
+                    "FASE 3 - REPARO: Faça a substituição do display ou bateria.",
+                    "FASE 4 - FECHAMENTO: Recoloque as proteções e cole a tampa traseira."
+                ]
+            },
+
+            // ==================== MOTOROLA ====================
+            {
+                id: 301, brand: "Motorola", name: "Motorola Edge 50 Pro",
+                chip: "Snapdragon 7 Gen 3", ram: "12 GB RAM", battery: "4500 mAh", camera: "50 MP Tripla",
+                image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Torx T3, Espátula plástica",
+                checklist: [
+                    "FASE 1 - ABERTURA DA TAMPA CURVA: Desligue o aparelho e aqueça a tampa traseira de vidro curvo.",
+                    "FASE 2 - CUIDADO COM BIOMETRIA: Abra com a ventosa e espátula, mas ATENÇÃO: o flex da digital está preso na tampa; desencaixe-o com cuidado extremo antes de puxar.",
+                    "FASE 3 - DESCONEXÃO DA BATERIA: Solte a blindagem interna e isole a bateria.",
+                    "FASE 4 - REPARO: Faça a troca da peça necessária.",
+                    "FASE 5 - FECHAMENTO: Reconecte a biometria, feche as blindagens e cole a tampa."
+                ]
+            },
+            {
+                id: 302, brand: "Motorola", name: "Moto G84 5G",
+                chip: "Snapdragon 695 5G", ram: "8 GB RAM", battery: "5000 mAh", camera: "50 MP Dupla",
+                image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Phillips 00, Espátula de nylon",
+                checklist: [
+                    "FASE 1 - PREPARO: Desligue o smartphone e retire o suporte SIM.",
+                    "FASE 2 - AQUECIMENTO E CORTE DE COLA: Aqueça o perímetro traseiro e passe a palheta plástica.",
+                    "FASE 3 - SEGURANÇA DA PLACA: Retire os parafusos da proteção interna e desconecte a bateria.",
+                    "FASE 4 - EXECUÇÃO: Substitua o display ou a bateria.",
+                    "FASE 5 - REMONTAGEM: Inverta as etapas e feche o aparelho."
+                ]
+            },
+            {
+                id: 303, brand: "Motorola", name: "Moto G54",
+                chip: "MediaTek Dimensity 7020", ram: "8 GB RAM", battery: "6000 mAh", camera: "50 MP Dupla",
+                image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Phillips 00, Espátula plástica",
+                checklist: [
+                    "FASE 1 - ABERTURA: Desligue o aparelho, remova o suporte do chip e aqueça as bordas traseiras.",
+                    "FASE 2 - DESCOLAGEM: Passe a espátula plástica para soltar a tampa traseira.",
+                    "FASE 3 - ENERGIA: Desconecte o flex da bateria.",
+                    "FASE 4 - REPARO: Realize a troca do componente desejado.",
+                    "FASE 5 - FECHAMENTO: Recoloque as proteções e cole a tampa."
+                ]
+            },
+
+            // ==================== XIAOMI ====================
+            {
+                id: 401, brand: "Xiaomi", name: "Xiaomi 14 Ultra",
+                chip: "Snapdragon 8 Gen 3", ram: "16 GB RAM", battery: "5000 mAh", camera: "50 MP Leica",
+                image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Kit chaves Xiaomi Precision, Pinça curvada",
+                checklist: [
+                    "FASE 1 - ABERTURA: Desligue o aparelho, remova a gaveta do chip e aqueça a tampa traseira uniformemente.",
+                    "FASE 2 - DESCOLAGEM: Puxe com a ventosa e introduza a espátula plástica nas bordas com cautela.",
+                    "FASE 3 - ISOLAMENTO: Desconecte o flex da bateria antes de mexer na placa.",
+                    "FASE 4 - REPARO: Troque a peça danificada.",
+                    "FASE 5 - FECHAMENTO: Recoloque as proteções e fixe a tampa traseira."
+                ]
+            },
+            {
+                id: 402, brand: "Xiaomi", name: "Redmi Note 13 Pro",
+                chip: "Snapdragon 7s Gen 2", ram: "8 GB RAM", battery: "5100 mAh", camera: "200 MP Tripla",
+                image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Phillips 00, Espátula plástica",
+                checklist: [
+                    "FASE 1 - ABERTURA: Desligue o Redmi Note 13 Pro, aqueça a tampa traseira e abra com ventosa.",
+                    "FASE 2 - SEGURANÇA: Remova a blindagem da placa e desconecte a bateria.",
+                    "FASE 3 - REPARO: Faça a troca do display ou da bateria.",
+                    "FASE 4 - FECHAMENTO: Limpe os resíduos, aplique nova cola e feche o aparelho."
+                ]
+            },
+            {
+                id: 403, brand: "Xiaomi", name: "Poco X6 Pro",
+                chip: "MediaTek Dimensity 8300 Ultra", ram: "8 GB RAM", battery: "5000 mAh", camera: "64 MP Tripla",
+                image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Phillips 00, Espátula plástica",
+                checklist: [
+                    "FASE 1 - ABERTURA: Aqueça as bordas traseiras do Poco X6 Pro e remova a tampa com cuidado.",
+                    "FASE 2 - CORTE DE ENERGIA: Desconecte a bateria imediatamente após abrir.",
+                    "FASE 3 - MANUTENÇÃO: Realize o reparo necessário.",
+                    "FASE 4 - REMONTAGEM: Recoloque os parafusos de proteção e cole a tampa traseira."
+                ]
+            },
+
+            // ==================== LG ====================
+            {
+                id: 501, brand: "LG", name: "LG Velvet 5G",
+                chip: "Snapdragon 765G", ram: "6 GB RAM", battery: "4300 mAh", camera: "48 MP Tripla",
+                image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Ventosa, Chave Phillips, Álcool isopropílico",
+                checklist: [
+                    "FASE 1 - ABERTURA: Desligue o LG Velvet, remova a bandeja SIM e aplique calor na tampa traseira de vidro curvado.",
+                    "FASE 2 - ESPÁTULA: Insira a ventosa e levante cautelosamente enquanto passa a espátula para dissolver a cola.",
+                    "FASE 3 - SEGURANÇA: Desconecte a bateria para evitar curtos.",
+                    "FASE 4 - MANUTENÇÃO: Realize a troca do componente.",
+                    "FASE 5 - REMONTAGEM: Limpe a cola velha e cole novamente."
+                ]
+            },
+            {
+                id: 502, brand: "LG", name: "LG K62",
+                chip: "MediaTek Helio P35", ram: "4 GB RAM", battery: "4000 mAh", camera: "48 MP Quádrupla",
+                image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Phillips 00, Espátula plástica",
+                checklist: [
+                    "FASE 1 - ABERTURA DA TAMPA PLÁSTICA: Desligue o aparelho, tire o chip e aqueça levemente. Desencaixe as presilhas laterais com espátula plástica.",
+                    "FASE 2 - DESCONEXÃO: Retire os parafusos da proteção interna da placa e desconecte a bateria.",
+                    "FASE 3 - REPARO: Substitua a tela ou a bateria.",
+                    "FASE 4 - FECHAMENTO: Encaixe a tampa traseira pressionando as presilhas até o clique."
+                ]
+            },
+            {
+                id: 503, brand: "LG", name: "LG K52",
+                chip: "MediaTek Helio P35", ram: "4 GB RAM", battery: "4000 mAh", camera: "13 MP Quádrupla",
+                image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Phillips 00, Espátula",
+                checklist: [
+                    "FASE 1 - ABERTURA: Desligue o aparelho e aqueça a tampa traseira plástica para soltar as travas.",
+                    "FASE 2 - SEGURANÇA: Desconecte o flex da bateria antes de mexer na placa.",
+                    "FASE 3 - REPARO: Faça a troca da tela ou dos componentes.",
+                    "FASE 4 - FECHAMENTO: Encaixe a tampa traseira até travar perfeitamente."
+                ]
+            }
+        ];
+
+        // Ferramental de Bancada
+        const toolsData = [
+            { name: "Soprador Térmico / Estação de Ar", desc: "Fundamental para amolecer colas de tampas traseiras e displays.", icon: "fa-wind" },
+            { name: "Kit de Chaves de Precisão", desc: "Chaves Phillips, Pentalobe, Torx e Tri-point para abrir qualquer modelo.", icon: "fa-screwdriver" },
+            { name: "Multímetro Digital", desc: "Essencial para testar curto-circuitos, tensão de baterias e trilhas.", icon: "fa-bolt" },
+            { name: "Fonte de Bancada Ajustável", desc: "Permite dar choque em baterias inativas e testar consumo de placa.", icon: "fa-plug" },
+            { name: "Separadora LCD a Vácuo", desc: "Auxilia na separação segura de vidros e telas coladas.", icon: "fa-tablet-screen-button" },
+            { name: "Pinças e Espátulas Anti-estáticas", desc: "Evitam danos a componentes sensíveis e cabos flex durante o manuseio.", icon: "fa-hand" }
+        ];
+
+        // Estoque Inicial
+        let inventoryData = [
+            { id: 1, name: "Tela Frontal OLED", model: "Galaxy S24 Ultra", qty: 3, price: 450.00 },
+            { id: 2, name: "Bateria Original", model: "iPhone 16 Pro Max", qty: 5, price: 210.00 },
+            { id: 3, name: "Conector de Carga Tipo-C", model: "Motorola Edge 50 Pro", qty: 8, price: 25.00 },
+            { id: 4, name: "Tela LCD + Touch", model: "iPhone 11", qty: 4, price: 160.00 },
+            { id: 5, name: "Tampa Traseira Vidro", model: "Galaxy S23+", qty: 2, price: 90.00 }
+        ];
+
+        // Navegação entre Seções
+        function showSection(sectionId) {
+            const sections = ['home', 'toolbox', 'budget', 'inventory', 'about'];
+            sections.forEach(s => {
+                const el = document.getElementById('sec-' + s);
+                if (s === sectionId) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Renderizar Aparelhos
+        function renderDevices(list) {
+            const grid = document.getElementById('devicesGrid');
+            grid.innerHTML = '';
+            if (list.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400">Nenhum aparelho encontrado.</div>`;
+                return;
+            }
+            list.forEach(dev => {
+                grid.innerHTML += `
+                    <div class="bg-cardbg border border-gray-800 rounded-2xl overflow-hidden shadow-xl hover:border-gray-700 transition flex flex-col">
+                        <div class="h-48 overflow-hidden bg-gray-900 relative">
+                            <img src="${dev.image}" alt="${dev.name}" class="w-full h-full object-cover opacity-85 hover:scale-105 transition duration-300">
+                            <span class="absolute top-3 left-3 bg-darkbg/85 backdrop-blur text-accent text-xs font-semibold px-3 py-1 rounded-full border border-gray-800">${dev.brand}</span>
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                            <div>
+                                <h3 class="text-lg font-bold text-white mb-2">${dev.name}</h3>
+                                <div class="space-y-1 text-xs text-gray-400">
+                                    <p><strong class="text-gray-300">Processador:</strong> ${dev.chip}</p>
+                                    <p><strong class="text-gray-300">Memória:</strong> ${dev.ram}</p>
+                                    <p><strong class="text-gray-300">Bateria:</strong> ${dev.battery}</p>
+                                </div>
+                            </div>
+                            <button onclick="openDeviceModal(${dev.id})" class="w-full bg-darkbg hover:bg-gray-800 border border-gray-700 text-white font-semibold py-2.5 rounded-xl text-sm transition flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-list-check text-accent"></i>
+                                <span>Ver Checklist & Manual Completo</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Filtro por Marca
+        function filterByBrand(brand) {
+            document.querySelectorAll('.brand-btn').forEach(btn => {
+                btn.classList.remove('bg-accent', 'text-white', 'active-brand');
+                btn.classList.add('bg-cardbg', 'text-gray-300');
+            });
+            event.target.classList.remove('bg-cardbg', 'text-gray-300');
+            event.target.classList.add('bg-accent', 'text-white', 'active-brand');
+
+            if (brand === 'all') {
+                renderDevices(devicesData);
+            } else {
+                const filtered = devicesData.filter(d => d.brand.toLowerCase() === brand.toLowerCase());
+                renderDevices(filtered);
+            }
+        }
+
+        // Busca Global
+        function filterDevices() {
+            const query = document.getElementById('globalSearch').value.toLowerCase();
+            const filtered = devicesData.filter(d => d.name.toLowerCase().includes(query) || d.brand.toLowerCase().includes(query) || d.chip.toLowerCase().includes(query));
+            renderDevices(filtered);
+            showSection('home');
+        }
+
+        // Modal Detalhes do Aparelho & Checklist Completo com Imagens Visuais
+        function openDeviceModal(id) {
+            const dev = devicesData.find(d => d.id === id);
+            if (!dev) return;
+
+            let checklistHtml = '';
+            dev.checklist.forEach((item, index) => {
+                checklistHtml += `
+                    <div class="flex items-start space-x-3 bg-darkbg p-4 rounded-xl border border-gray-800">
+                        <div class="w-7 h-7 rounded-lg bg-accent/20 text-accent font-bold flex items-center justify-center shrink-0 mt-0.5 text-xs">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <p class="text-sm text-gray-200 leading-relaxed font-medium">${item}</p>
+                    </div>
+                `;
+            });
+
+            document.getElementById('modalContent').innerHTML = `
+                <div class="flex items-center space-x-4 border-b border-gray-800 pb-4">
+                    <img src="${dev.image}" alt="${dev.name}" class="w-16 h-16 object-cover rounded-xl border border-gray-700 shadow">
+                    <div>
+                        <span class="text-xs font-semibold text-accent uppercase tracking-wider">${dev.brand}</span>
+                        <h2 class="text-xl md:text-2xl font-bold text-white">${dev.name}</h2>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400"><i class="fa-solid fa-microchip text-accent mr-2"></i> Ficha Técnica</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-darkbg p-4 rounded-xl border border-gray-800">
+                        <p><strong class="text-gray-300">Chipset:</strong> ${dev.chip}</p>
+                        <p><strong class="text-gray-300">RAM:</strong> ${dev.ram}</p>
+                        <p><strong class="text-gray-300">Bateria:</strong> ${dev.battery}</p>
+                        <p><strong class="text-gray-300">Câmera:</strong> ${dev.camera}</p>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400"><i class="fa-solid fa-screwdriver-wrench text-accent mr-2"></i> Ferramentas Necessárias</h3>
+                    <p class="text-xs bg-darkbg p-3.5 rounded-xl border border-gray-800 text-gray-300">${dev.tools}</p>
+                </div>
+
+                <!-- GUIA VISUAL DE BANCADA -->
+                <div class="space-y-3">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400"><i class="fa-solid fa-image text-accent mr-2"></i> Esquema Visual de Referência (Abertura e Bancada)</h3>
+                    <div class="rounded-xl overflow-hidden border border-gray-800 h-56 bg-gray-900 relative">
+                        <img src="${dev.stepImg || dev.image}" alt="Esquema visual ${dev.name}" class="w-full h-full object-cover opacity-90">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-darkbg via-darkbg/80 to-transparent p-3 text-center">
+                            <span class="text-xs text-gray-200 font-semibold"><i class="fa-solid fa-eye text-accent mr-1"></i> Visualização orientativa para apoio durante o procedimento no ${dev.name}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400"><i class="fa-solid fa-clipboard-list text-accent mr-2"></i> Checklist Completo (Início, Reparo e Remontagem)</h3>
+                    <div class="space-y-3">
+                        ${checklistHtml}
+                    </div>
+                </div>
+            `;
+            document.getElementById('deviceModal').classList.remove('hidden');
+            document.getElementById('deviceModal').classList.add('flex');
+        }
+
+        function closeDeviceModal() {
+            document.getElementById('deviceModal').classList.remove('flex');
+            document.getElementById('deviceModal').classList.add('hidden');
+        }
+
+        // Renderizar Ferramental
+        function renderTools() {
+            const grid = document.getElementById('toolsGrid');
+            grid.innerHTML = '';
+            toolsData.forEach(tool => {
+                grid.innerHTML += `
+                    <div class="bg-cardbg border border-gray-800 p-6 rounded-2xl space-y-3 shadow-xl">
+                        <div class="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center text-accent text-xl">
+                            <i class="fa-solid ${tool.icon}"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">${tool.name}</h3>
+                        <p class="text-sm text-gray-400 leading-relaxed">${tool.desc}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // Simulador de Orçamento
+        function calculateBudget() {
+            const costPart = parseFloat(document.getElementById('costPart').value) || 0;
+            const costHours = parseFloat(document.getElementById('costHours').value) || 0;
+            const hourRate = parseFloat(document.getElementById('hourRate').value) || 0;
+            const profitMargin = parseFloat(document.getElementById('profitMargin').value) || 0;
+
+            const laborCost = costHours * hourRate;
+            const totalCost = costPart + laborCost;
+            const profit = totalCost * (profitMargin / 100);
+            const suggestedPrice = totalCost + profit;
+
+            const resDiv = document.getElementById('budgetResult');
+            resDiv.classList.remove('hidden');
+            resDiv.innerHTML = `
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-400">Custo Total (Peça + Mão de Obra):</span>
+                    <span class="font-bold text-white">R$ ${totalCost.toFixed(2)}</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-400">Lucro Estimado (${profitMargin}%):</span>
+                    <span class="font-bold text-green-400">R$ ${profit.toFixed(2)}</span>
+                </div>
+                <div class="border-t border-gray-700 pt-2 flex justify-between text-base">
+                    <span class="font-bold text-white">Preço Sugerido ao Cliente:</span>
+                    <span class="font-black text-accent text-lg">R$ ${suggestedPrice.toFixed(2)}</span>
+                </div>
+            `;
+        }
+
+        // Renderizar Estoque
+        function renderInventory() {
+            const tbody = document.getElementById('inventoryTableBody');
+            tbody.innerHTML = '';
+            inventoryData.forEach(item => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-gray-900/40 transition">
+                        <td class="p-4 font-semibold text-white">${item.name}</td>
+                        <td class="p-4 text-gray-300">${item.model}</td>
+                        <td class="p-4"><span class="bg-accent/20 text-accent font-bold px-2.5 py-1 rounded-lg text-xs">${item.qty} un.</span></td>
+                        <td class="p-4 text-gray-300">R$ ${item.price.toFixed(2)}</td>
+                        <td class="p-4">
+                            <button onclick="removePart(${item.id})" class="text-gray-500 hover:text-accent transition"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function openAddPartModal() {
+            document.getElementById('partModal').classList.remove('hidden');
+            document.getElementById('partModal').classList.add('flex');
+        }
+
+        function closeAddPartModal() {
+            document.getElementById('partModal').classList.remove('flex');
+            document.getElementById('partModal').classList.add('hidden');
+        }
+
+        function saveNewPart() {
+            const name = document.getElementById('partName').value;
+            const model = document.getElementById('partModel').value;
+            const qty = parseInt(document.getElementById('partQty').value) || 1;
+            const price = parseFloat(document.getElementById('partPrice').value) || 0;
+
+            if (!name || !model) {
+                alert('Preencha os campos obrigatórios.');
+                return;
+            }
+
+            inventoryData.push({
+                id: inventoryData.length + 1,
+                name,
+                model,
+                qty,
+                price
+            });
+
+            document.getElementById('partName').value = '';
+            document.getElementById('partModel').value = '';
+            document.getElementById('partQty').value = '1';
+            document.getElementById('partPrice').value = '';
+
+            closeAddPartModal();
+            renderInventory();
+        }
+
+        function removePart(id) {
+            inventoryData = inventoryData.filter(i => i.id !== id);
+            renderInventory();
+        }
+
+        // Initialization
+        window.onload = function() {
+            renderDevices(devicesData);
+            renderTools();
+            renderInventory();
+        };
+    </script>
+</body>
+</html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -269,7 +1110,7 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Base de Dados Revisada e Auditada: Apenas Smartphones com Fotos Exatas e Checklists Completos
+        // Base de Dados Corrigida: URLs isoladas estritamente por marca para evitar cruzamento de imagens
         const devicesData = [
             // ==================== APPLE IPHONES (DO 6 AO 16) ====================
             {
@@ -435,8 +1276,8 @@
             {
                 id: 401, brand: "Xiaomi", name: "Xiaomi 14 Ultra",
                 chip: "Snapdragon 8 Gen 3", ram: "16 GB RAM", battery: "5000 mAh", camera: "50 MP Leica",
-                image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?auto=format&fit=crop&w=600&q=80",
+                image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Kit chaves Xiaomi Precision, Pinça curvada",
                 checklist: [
                     "FASE 1 - ABERTURA: Desligue o aparelho, remova a gaveta do chip e aqueça a tampa traseira uniformemente.",
