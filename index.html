@@ -1,38 +1,520 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TecFix Stock - Gestão de Estoque e Manutenção</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TecFix Stock - Manual Técnico & Guia Fotográfico de Reparo</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#0f172a',
+              card: '#1e293b',
+              accent: '#10b981',
+              blue: '#3b82f6',
+              amber: '#f59e0b',
+              rose: '#f43f5e'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #0b0f19; color: #f1f5f9; font-family: system-ui, -apple-system, sans-serif; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #1e293b; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    .active-tab { border-bottom: 2px solid #10b981; color: #10b981; }
+  </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col">
-    <header class="bg-slate-800 border-b border-slate-700 p-4 shadow-md">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold text-emerald-400">TecFix Stock</h1>
-            <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-full font-medium">Sistema Online</span>
+<body class="min-h-screen flex flex-col justify-between custom-scrollbar">
+
+  <!-- HEADER / NAVBAR -->
+  <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-3">
+      <div class="flex items-center space-x-3">
+        <div class="bg-emerald-500/20 p-2.5 rounded-xl border border-emerald-500/40 text-emerald-400">
+          <i class="fa-solid font-bold fa-screwdriver-wrench text-xl"></i>
         </div>
-    </header>
+        <div>
+          <h1 class="text-xl font-extrabold tracking-tight text-white flex items-center gap-2">
+            TecFix <span class="text-emerald-400">Stock</span>
+          </h1>
+          <p class="text-xs text-slate-400">Guia Fotográfico de Bancada para Manutenção</p>
+        </div>
+      </div>
 
-    <main class="flex-1 max-w-4xl w-full mx-auto p-4 flex flex-col gap-6">
-        <section class="bg-slate-800 border border-slate-700 rounded-xl p-5 shadow-lg">
-            <h2 class="text-lg font-semibold mb-3 text-white">Painel de Controlo</h2>
-            <p class="text-slate-400 text-sm mb-4">Bem-vindo ao seu aplicativo de gestão e guia profissional de manutenção e reparo de celulares.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="bg-slate-700/50 p-4 rounded-lg border border-slate-600/50">
-                    <h3 class="text-sm font-medium text-slate-300">Estado do Sistema</h3>
-                    <p class="text-2xl font-bold text-emerald-400 mt-1">Ativo</p>
-                </div>
-                <div class="bg-slate-700/50 p-4 rounded-lg border border-slate-600/50">
-                    <h3 class="text-sm font-medium text-slate-300">Repositório</h3>
-                    <p class="text-sm font-semibold text-sky-400 mt-2 truncate">tecfix-stock</p>
-                </div>
+      <!-- BUSCA RÁPIDA -->
+      <div class="flex-1 max-w-md mx-2">
+        <div class="relative">
+          <input type="text" id="searchInput" oninput="filterModels()" placeholder="Buscar celular (ex: A52, iPhone 11, G60, K52)..." class="w-full bg-slate-800 border border-slate-700 text-slate-200 pl-10 pr-4 py-2 rounded-lg text-sm focus:outline-none focus:border-emerald-500 transition-colors">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-500 text-sm"></i>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Sistema Ativo
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTAINER PRINCIPAL -->
+  <main class="max-w-7xl mx-auto px-4 py-6 w-full flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+    <!-- PAINEL ESQUERDO: MARCAS E SELEÇÃO DE APARELHO -->
+    <section class="lg:col-span-4 bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col h-[750px]">
+      <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+        <i class="fa-solid fa-mobile-screen text-emerald-400"></i> Selecionar Marca e Modelo
+      </h2>
+
+      <!-- BOTOES DE MARCAS -->
+      <div class="grid grid-cols-4 gap-1.5 mb-4" id="brandButtons">
+        <button onclick="selectBrand('apple')" class="brand-btn bg-slate-800 hover:bg-slate-700 text-xs py-2 rounded-lg text-slate-300 font-medium transition active text-center border border-slate-700/50" data-brand="apple">Apple</button>
+        <button onclick="selectBrand('samsung')" class="brand-btn bg-emerald-600 text-white text-xs py-2 rounded-lg font-medium transition text-center border border-emerald-500" data-brand="samsung">Samsung</button>
+        <button onclick="selectBrand('motorola')" class="brand-btn bg-slate-800 hover:bg-slate-700 text-xs py-2 rounded-lg text-slate-300 font-medium transition text-center border border-slate-700/50" data-brand="motorola">Motorola</button>
+        <button onclick="selectBrand('xiaomi')" class="brand-btn bg-slate-800 hover:bg-slate-700 text-xs py-2 rounded-lg text-slate-300 font-medium transition text-center border border-slate-700/50" data-brand="xiaomi">Xiaomi</button>
+        <button onclick="selectBrand('lg')" class="brand-btn bg-slate-800 hover:bg-slate-700 text-xs py-2 rounded-lg text-slate-300 font-medium transition text-center border border-slate-700/50" data-brand="lg">LG</button>
+        <button onclick="selectBrand('asus')" class="brand-btn bg-slate-800 hover:bg-slate-700 text-xs py-2 rounded-lg text-slate-300 font-medium transition text-center border border-slate-700/50" data-brand="asus">ASUS</button>
+        <button onclick="selectBrand('realme')" class="brand-btn bg-slate-800 hover:bg-slate-700 text-xs py-2 rounded-lg text-slate-300 font-medium transition text-center border border-slate-700/50" data-brand="realme">Realme</button>
+        <button onclick="selectBrand('all')" class="brand-btn bg-slate-800 hover:bg-slate-700 text-xs py-2 rounded-lg text-slate-300 font-medium transition text-center border border-slate-700/50" data-brand="all">Todos</button>
+      </div>
+
+      <!-- LISTA DE MODELOS FILTRADA -->
+      <div class="flex-1 overflow-y-auto custom-scrollbar space-y-2 pr-1" id="modelList">
+      </div>
+    </section>
+
+    <!-- PAINEL DIREITO: TELA DE BANCADA COM FOTOS PASSO A PASSO -->
+    <section class="lg:col-span-8 space-y-6">
+
+      <!-- FICHA TÉCNICA DO MODELO SELECIONADO -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-lg">
+        <div class="flex flex-wrap justify-between items-start gap-4 mb-4 border-b border-slate-800 pb-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span id="selectedBrandBadge" class="px-2.5 py-0.5 rounded text-xs font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30 uppercase">Samsung</span>
+              <h2 id="selectedModelName" class="text-2xl font-bold text-white">Galaxy A52 / A52s (4G/5G)</h2>
             </div>
-        </section>
-    </main>
+            <p id="selectedModelCode" class="text-xs text-slate-400 mt-1">Código de Modelo: SM-A525F / SM-A526B</p>
+          </div>
+          <div class="flex items-center gap-3 bg-slate-800/80 px-3 py-2 rounded-xl border border-slate-700/60 text-xs">
+            <div>
+              <span class="text-slate-400 block">Dificuldade:</span>
+              <span id="selectedDifficulty" class="font-bold text-amber-400">Média (Abertura Traseira)</span>
+            </div>
+            <div class="w-px h-6 bg-slate-700"></div>
+            <div>
+              <span class="text-slate-400 block">Soprador/Manta:</span>
+              <span id="selectedTemp" class="font-bold text-rose-400">80°C - 90°C</span>
+            </div>
+          </div>
+        </div>
 
-    <footer class="bg-slate-800 border-t border-slate-700 text-center py-4 text-xs text-slate-500">
-        &copy; 2026 TecFix Stock. Todos os direitos reservados.
-    </footer>
+        <!-- ESPECIFICAÇÕES DE BANCADA -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+          <div class="bg-slate-800/50 p-2.5 rounded-lg border border-slate-700/40">
+            <span class="text-slate-400 block">Tipo de Tela:</span>
+            <strong id="specScreen" class="text-slate-200">Super AMOLED 6.5"</strong>
+          </div>
+          <div class="bg-slate-800/50 p-2.5 rounded-lg border border-slate-700/40">
+            <span class="text-slate-400 block">Bateria:</span>
+            <strong id="specBattery" class="text-slate-200">4500 mAh (EB-BA526ABY)</strong>
+          </div>
+          <div class="bg-slate-800/50 p-2.5 rounded-lg border border-slate-700/40">
+            <span class="text-slate-400 block">Chaves Necessárias:</span>
+            <strong id="specScrews" class="text-slate-200">Phillips #00 / Espátula</strong>
+          </div>
+          <div class="bg-slate-800/50 p-2.5 rounded-lg border border-slate-700/40">
+            <span class="text-slate-400 block">Conector Carga:</span>
+            <strong id="specDock" class="text-slate-200">Type-C (Placa Sub separada)</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABS DE PROCEDIMENTOS -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-lg">
+        <div class="flex border-b border-slate-800 space-x-6 text-sm font-semibold mb-6 overflow-x-auto custom-scrollbar">
+          <button onclick="setProcedure('screen')" id="tab-screen" class="pb-3 active-tab transition whitespace-nowrap flex items-center gap-2">
+            <i class="fa-solid fa-mobile-retro"></i> 1. Troca de Tela
+          </button>
+          <button onclick="setProcedure('battery')" id="tab-battery" class="pb-3 text-slate-400 hover:text-slate-200 transition whitespace-nowrap flex items-center gap-2">
+            <i class="fa-solid fa-battery-half"></i> 2. Troca de Bateria
+          </button>
+          <button onclick="setProcedure('dock')" id="tab-dock" class="pb-3 text-slate-400 hover:text-slate-200 transition whitespace-nowrap flex items-center gap-2">
+            <i class="fa-solid fa-plug"></i> 3. Conector / Carga
+          </button>
+          <button onclick="setProcedure('cleaning')" id="tab-cleaning" class="pb-3 text-slate-400 hover:text-slate-200 transition whitespace-nowrap flex items-center gap-2">
+            <i class="fa-solid fa-droplet-slash"></i> 4. Desoxidação / Placa
+          </button>
+        </div>
+
+        <!-- GUIA FOTOGRÁFICO PASSO A PASSO -->
+        <div class="space-y-6">
+          <div class="flex items-center justify-between">
+            <h3 id="procedureTitle" class="text-lg font-bold text-emerald-400 flex items-center gap-2">
+              <i class="fa-solid fa-camera"></i> Passo a Passo Fotográfico: Troca da Tela Touch / Display
+            </h3>
+            <span id="stepCounter" class="text-xs bg-slate-800 px-3 py-1 rounded-full text-slate-300 font-mono border border-slate-700">Etapa 1 de 4</span>
+          </div>
+
+          <!-- CONTAINER DAS FOTOS -->
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+              <div class="relative bg-slate-900 rounded-lg overflow-hidden border border-slate-800 aspect-video flex items-center justify-center">
+                <img id="stepImage" src="https://images.unsplash.com/photo-1597740985671-2a8a3b80502e?auto=format&fit=crop&w=800&q=80" alt="Passo de Reparo" class="w-full h-full object-cover">
+                <div class="absolute bottom-2 left-2 bg-slate-900/90 backdrop-blur-md px-2.5 py-1 rounded text-[11px] font-mono text-emerald-400 border border-emerald-500/30">
+                  <i class="fa-solid fa-magnifying-glass"></i> <span id="photoBadge">Foto 1: Aquecimento da Tampa</span>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <div id="stepAlert" class="bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs p-3 rounded-lg flex items-start gap-2">
+                  <i class="fa-solid fa-triangle-exclamation mt-0.5 text-amber-400"></i>
+                  <span id="alertText">Cuidado: Não introduza a palheta plástica a mais de 3mm no lado direito para evitar rasgar o cabo flex do leitor biométrico e botões.</span>
+                </div>
+                <div>
+                  <h4 id="stepHeadline" class="font-bold text-white text-base mb-1">1. Aquecimento e Descolagem Traseira</h4>
+                  <p id="stepDescription" class="text-xs text-slate-300 leading-relaxed">
+                    Posicione o aparelho na manta térmica regulada a 85°C durante 3 a 5 minutos. Insira a ventosa na tampa traseira e abra uma pequena brecha com a palheta de náilon umedecida com álcool isopropílico.
+                  </p>
+                </div>
+                <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800 text-xs text-slate-400">
+                  <strong>Ferramenta desta etapa:</strong> <span id="stepTool" class="text-emerald-400 font-medium">Estação de Ar / Manta Térmica + Palheta de Náilon</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CONTROLES DE FOTO -->
+            <div class="flex justify-between items-center mt-4 pt-3 border-t border-slate-800">
+              <button onclick="prevStep()" id="btnPrevStep" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold disabled:opacity-40 transition">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Foto Anterior
+              </button>
+              <div class="flex space-x-1.5" id="stepDots">
+              </div>
+              <button onclick="nextStep()" id="btnNextStep" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition">
+                Próxima Foto <i class="fa-solid fa-arrow-right ml-1"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 text-xs text-slate-300 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-shield-halved text-emerald-400 text-xl"></i>
+              <div>
+                <span class="font-bold text-white block">Regra de Ouro da Bancada TecFix:</span>
+                Sempre desconecte a Bateria em primeiro lugar antes de mexer em qualquer outro cabo flex ou parafuso.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- SEÇÃO SOBRE NÓS: VALDEMIR STOCK & WESLEY NUNES STOCK -->
+  <footer class="bg-slate-900 border-t border-slate-800 mt-12 py-8">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/60 rounded-2xl p-6 md:p-8">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="space-y-3 text-center md:text-left max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+              <i class="fa-solid fa-heart"></i> Sobre o Projeto TecFix Stock
+            </div>
+            <h3 class="text-xl font-extrabold text-white">Incentivando o Empreendedorismo e Pequenos Negócios</h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              O <strong>TecFix Stock</strong> nasceu da união e visão dos irmãos <strong>Valdemir Stock</strong> e <strong>Wesley Nunes Stock</strong>. Nosso objetivo é simplificar a rotina técnica de bancada, fornecendo um guia visual gratuito, prático e acessível para quem está iniciando ou gerenciando seu próprio negócio de manutenção de celulares.
+            </p>
+          </div>
+          <div class="flex items-center gap-4 bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+            <div class="text-center px-2">
+              <span class="block font-bold text-white text-sm">Valdemir Stock</span>
+              <span class="text-[11px] text-emerald-400">Co-fundador & Desenvolvedor</span>
+            </div>
+            <div class="w-px h-8 bg-slate-800"></div>
+            <div class="text-center px-2">
+              <span class="block font-bold text-white text-sm">Wesley Nunes Stock</span>
+              <span class="text-[11px] text-emerald-400">Co-fundador & Especialista Técnico</span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-slate-800/80 text-center text-xs text-slate-500 flex flex-wrap justify-between items-center gap-2">
+          <span>&copy; 2026 TecFix Stock — Criado por Valdemir Stock e Wesley Nunes Stock.</span>
+          <span class="text-slate-400"><i class="fa-solid fa-code text-emerald-400"></i> Hospedado via GitHub Pages</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT BANCO DE DADOS -->
+  <script>
+    const db = [
+      { id: 'samsung-a52', brand: 'samsung', name: 'Galaxy A52 / A52s', code: 'SM-A525F / A526B', diff: 'Média', temp: '80°C - 90°C', screen: 'Super AMOLED 6.5"', battery: '4500 mAh (EB-BA526ABY)', screws: 'Phillips #00', dock: 'Placa Sub Type-C' },
+      { id: 'samsung-a10', brand: 'samsung', name: 'Galaxy A10 / A10s', code: 'SM-A105F / A107M', diff: 'Fácil', temp: '75°C - 80°C', screen: 'IPS LCD 6.2"', battery: '3400 mAh', screws: 'Phillips #00', dock: 'Micro USB / Type-C' },
+      { id: 'samsung-a32', brand: 'samsung', name: 'Galaxy A32 4G/5G', code: 'SM-A325F / A326B', diff: 'Média', temp: '80°C', screen: 'Super AMOLED 6.4"', battery: '5000 mAh', screws: 'Phillips #00', dock: 'Type-C' },
+      { id: 'samsung-a54', brand: 'samsung', name: 'Galaxy A54 5G', code: 'SM-A546B', diff: 'Média', temp: '85°C', screen: 'Super AMOLED 6.4"', battery: '5000 mAh', screws: 'Phillips #00', dock: 'Type-C' },
+      { id: 'samsung-s20fe', brand: 'samsung', name: 'Galaxy S20 FE', code: 'SM-G780F / G781B', diff: 'Média', temp: '85°C', screen: 'Super AMOLED 6.5"', battery: '4500 mAh', screws: 'Phillips #00', dock: 'Type-C' },
+      { id: 'samsung-s21', brand: 'samsung', name: 'Galaxy S21 / S21 Ultra', code: 'SM-G991B / G998B', diff: 'Alta', temp: '90°C', screen: 'Dynamic AMOLED 2X', battery: '4000 / 5000 mAh', screws: 'Phillips #00', dock: 'Type-C' },
+      { id: 'samsung-s23', brand: 'samsung', name: 'Galaxy S23 / S23 Ultra', code: 'SM-S911B / S918B', diff: 'Alta', temp: '90°C', screen: 'Dynamic AMOLED 2X', battery: '3900 / 5000 mAh', screws: 'Phillips #00', dock: 'Type-C' },
+      { id: 'apple-iphone11', brand: 'apple', name: 'iPhone 11', code: 'A2111 / A2221', diff: 'Média', temp: '70°C (Tela)', screen: 'Liquid Retina HD 6.1"', battery: '3110 mAh', screws: 'Pentalobe P2 + Tri-Wing Y000 + Phillips', dock: 'Lightning' },
+      { id: 'apple-iphone12', brand: 'apple', name: 'iPhone 12 / 12 Pro', code: 'A2172 / A2341', diff: 'Alta', temp: '75°C', screen: 'OLED Super Retina XDR 6.1"', battery: '2815 mAh', screws: 'Pentalobe P2 + Tri-Wing Y000', dock: 'Lightning' },
+      { id: 'apple-iphone13', brand: 'apple', name: 'iPhone 13 / 13 Pro', code: 'A2482 / A2633', diff: 'Alta', temp: '75°C', screen: 'OLED Super Retina XDR 6.1"', battery: '3227 mAh', screws: 'Pentalobe P2 + Tri-Wing Y000', dock: 'Lightning' },
+      { id: 'apple-iphone14', brand: 'apple', name: 'iPhone 14 / 14 Pro', code: 'A2649 / A2882', diff: 'Alta', temp: '75°C', screen: 'OLED Super Retina XDR 6.1"', battery: '3279 mAh', screws: 'Pentalobe P2 + Tri-Wing', dock: 'Lightning / Type-C' },
+      { id: 'moto-g30', brand: 'motorola', name: 'Moto G30 / G10', code: 'XT2129 / XT2127', diff: 'Fácil', temp: '80°C', screen: 'IPS LCD 6.5"', battery: '5000 mAh', screws: 'Torx T3 / Phillips #00', dock: 'Type-C' },
+      { id: 'moto-g60', brand: 'motorola', name: 'Moto G60', code: 'XT2135-2', diff: 'Média', temp: '80°C', screen: 'IPS LCD 120Hz 6.8"', battery: '6000 mAh', screws: 'Torx T3 / Phillips #00', dock: 'Type-C' },
+      { id: 'moto-g84', brand: 'motorola', name: 'Moto G84 5G', code: 'XT2343-1', diff: 'Média', temp: '80°C', screen: 'P-OLED 6.5"', battery: '5000 mAh', screws: 'Phillips #00', dock: 'Type-C' },
+      { id: 'moto-e7', brand: 'motorola', name: 'Moto E7 / E7 Plus', code: 'XT2095 / XT2081', diff: 'Fácil', temp: '75°C', screen: 'IPS LCD 6.5"', battery: '4000 / 5000 mAh', screws: 'Phillips #00', dock: 'Type-C / Micro-USB' },
+      { id: 'xiaomi-note10', brand: 'xiaomi', name: 'Redmi Note 10 / 10S', code: 'M2101K7AG', diff: 'Média', temp: '80°C', screen: 'AMOLED 6.43"', battery: '5000 mAh', screws: 'Phillips #00', dock: 'Type-C' },
+      { id: 'xiaomi-note11', brand: 'xiaomi', name: 'Redmi Note 11 / 11S', code: '2201117TG', diff: 'Média', temp: '80°C', screen: 'AMOLED 90Hz 6.43"', battery: '5000 mAh', screws: 'Phillips #00', dock: 'Type-C' },
+      { id: 'xiaomi-pocox3', brand: 'xiaomi', name: 'POCO X3 / Pro', code: 'M2007J20CG', diff: 'Média', temp: '85°C', screen: 'IPS LCD 120Hz 6.67"', battery: '5160 mAh', screws: 'Phillips #00', dock: 'Type-C' },
+      { id: 'lg-k52', brand: 'lg', name: 'LG K52 / K62', code: 'LM-K520 / LM-K525', diff: 'Fácil', temp: '75°C', screen: 'IPS LCD 6.6"', battery: '4000 mAh', screws: 'Phillips #00', dock: 'Type-C' },
+      { id: 'lg-k61', brand: 'lg', name: 'LG K61', code: 'LM-Q630', diff: 'Fácil', temp: '75°C', screen: 'IPS LCD 6.53"', battery: '4000 mAh', screws: 'Phillips #00', dock: 'Type-C' }
+    ];
+
+    const procedureSteps = {
+      screen: [
+        {
+          img: 'https://images.unsplash.com/photo-1597740985671-2a8a3b80502e?auto=format&fit=crop&w=800&q=80',
+          badge: 'Foto 1: Aquecimento da Tampa',
+          headline: '1. Aquecimento da Tampa Traseira',
+          desc: 'Aqueça o aparelho na manta térmica a 85°C por 3 a 5 minutos para amaciar a cola original de fábrica.',
+          alert: 'Cuidado para não ultrapassar 90°C para não danificar a bateria internamente.',
+          tool: 'Manta Térmica / Soprador de Ar'
+        },
+        {
+          img: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+          badge: 'Foto 2: Remoção dos Parafusos',
+          headline: '2. Retirada do ARO e Blindagens',
+          desc: 'Remova todos os parafusos Phillips com chave de precisão e organize na manta magnética para não trocar os tamanhos.',
+          alert: 'Parafusos maiores colocados no local errado podem perfurar a placa mãe!',
+          tool: 'Chave Phillips #00 + Espátula Plástica'
+        },
+        {
+          img: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=800&q=80',
+          badge: 'Foto 3: Desconexão dos Flex',
+          headline: '3. Desconexão de Segurança',
+          desc: 'Primeiro desconecte o cabo da bateria. Em seguida, desconecte o cabo flex da tela principal e sub-placa.',
+          alert: 'Sempre use espátula plástica para desconectar conectores FPC. Nunca use chave metálica.',
+          tool: 'Espátula de Náilon Antiestática'
+        },
+        {
+          img: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=800&q=80',
+          badge: 'Foto 4: Teste e Colagem do Display',
+          headline: '4. Teste Prévio e Aplicação da Cola T7000/B7000',
+          desc: 'Encaixe a tela nova e teste o touch totalmente antes de colar. Aplique uma fina camada de cola T7000 no aro e fixe.',
+          alert: 'Não passe cola excessiva sobre o sensor de proximidade ou fone auricular.',
+          tool: 'Cola T7000 / B7000 + Elásticos de Fixação'
+        }
+      ],
+      battery: [
+        {
+          img: 'https://images.unsplash.com/photo-1597740985671-2a8a3b80502e?auto=format&fit=crop&w=800&q=80',
+          badge: 'Foto 1: Desconexão Obrigatória',
+          headline: '1. Desconectar Polo da Bateria',
+          desc: 'Desconecte o conector FPC da bateria usando a espátula plástica para remover a energia de toda a placa mãe.',
+          alert: 'Nunca faça alavanca com chaves de fenda de metal perto da bateria.',
+          tool: 'Espátula Plástica'
+        },
+        {
+          img: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+          badge: 'Foto 2: Aplicação de Isopropílico',
+          headline: '2. Removendo a Cola da Bateria',
+          desc: 'Aplique pequenas gotas de álcool isopropílico 99% nas laterais da bateria para dissolver a fita dupla-face.',
+          alert: 'Não use ferramentas pontiagudas para não perfurar a célula de lítio.',
+          tool: 'Álcool Isopropílico + Cartão Plástico'
+        }
+      ],
+      dock: [
+        {
+          img: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=800&q=80',
+          badge: 'Foto 1: Acesso à Sub-placa',
+          headline: '1. Remoção do Alto-Falante Inferior',
+          desc: 'Retire os parafusos do módulo do alto-falante inferior para ter acesso à sub-placa do conector de carga.',
+          alert: 'Atenção ao cabo de antena coaxial acoplado na lateral da sub-placa.',
+          tool: 'Chave Phillips + Pinça'
+        }
+      ],
+      cleaning: [
+        {
+          img: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=800&q=80',
+          badge: 'Foto 1: Banho Ultra-sônico',
+          headline: '1. Desoxidação de Placa em Álcool Isopropílico',
+          desc: 'Remova as blindagens da placa mãe e coloque a placa em Cuba Ultrassônica com álcool 99% por 5 a 10 minutos.',
+          alert: 'Retire todas as câmeras antes de colocar a placa em imersão com álcool.',
+          tool: 'Cuba Ultrassônica + Álcool Isopropílico'
+        }
+      ]
+    };
+
+    let selectedBrand = 'samsung';
+    let selectedModel = db[0];
+    let currentProcedure = 'screen';
+    let currentStepIndex = 0;
+
+    window.onload = () => {
+      renderModelList();
+      loadModelData(selectedModel);
+    };
+
+    function selectBrand(brand) {
+      selectedBrand = brand;
+      document.querySelectorAll('.brand-btn').forEach(btn => {
+        if(btn.dataset.brand === brand) {
+          btn.className = "brand-btn bg-emerald-600 text-white text-xs py-2 rounded-lg font-medium transition text-center border border-emerald-500 shadow";
+        } else {
+          btn.className = "brand-btn bg-slate-800 hover:bg-slate-700 text-xs py-2 rounded-lg text-slate-300 font-medium transition text-center border border-slate-700/50";
+        }
+      });
+      renderModelList();
+    }
+
+    function renderModelList() {
+      const searchVal = document.getElementById('searchInput').value.toLowerCase();
+      const listEl = document.getElementById('modelList');
+      listEl.innerHTML = '';
+
+      const filtered = db.filter(item => {
+        const matchesBrand = (selectedBrand === 'all' || item.brand === selectedBrand);
+        const matchesSearch = item.name.toLowerCase().includes(searchVal) || item.code.toLowerCase().includes(searchVal);
+        return matchesBrand && matchesSearch;
+      });
+
+      if(filtered.length === 0) {
+        listEl.innerHTML = `
+          <div class="text-center py-8 text-slate-500 text-xs">
+            <i class="fa-solid fa-circle-question text-2xl mb-2 text-slate-600 block"></i>
+            Nenhum celular encontrado.<br>
+            <button onclick="addCustomModel('${searchVal}')" class="mt-3 px-3 py-1.5 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-500 transition">
+              + Gerar Ficha para "${searchVal}"
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const isSelected = item.id === selectedModel.id;
+        const card = document.createElement('div');
+        card.className = `p-3 rounded-xl cursor-pointer border transition flex justify-between items-center ${isSelected ? 'bg-emerald-950/40 border-emerald-500/80 text-white shadow' : 'bg-slate-800/40 border-slate-800/80 hover:bg-slate-800 text-slate-300'}`;
+        card.onclick = () => {
+          selectedModel = item;
+          renderModelList();
+          loadModelData(item);
+        };
+
+        card.innerHTML = `
+          <div>
+            <h4 class="font-bold text-xs ${isSelected ? 'text-emerald-400' : 'text-slate-200'}">${item.name}</h4>
+            <span class="text-[10px] text-slate-400 font-mono">${item.code}</span>
+          </div>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-400">${item.diff}</span>
+        `;
+        listEl.appendChild(card);
+      });
+    }
+
+    function filterModels() {
+      renderModelList();
+    }
+
+    function loadModelData(model) {
+      document.getElementById('selectedModelName').innerText = model.name;
+      document.getElementById('selectedModelCode').innerText = `Código: ${model.code}`;
+      document.getElementById('selectedBrandBadge').innerText = model.brand;
+      document.getElementById('selectedDifficulty').innerText = model.diff;
+      document.getElementById('selectedTemp').innerText = model.temp;
+      document.getElementById('specScreen').innerText = model.screen;
+      document.getElementById('specBattery').innerText = model.battery;
+      document.getElementById('specScrews').innerText = model.screws;
+      document.getElementById('specDock').innerText = model.dock;
+
+      currentStepIndex = 0;
+      updateProcedureView();
+    }
+
+    function setProcedure(procedureKey) {
+      currentProcedure = procedureKey;
+      currentStepIndex = 0;
+
+      ['screen', 'battery', 'dock', 'cleaning'].forEach(key => {
+        const btn = document.getElementById(`tab-${key}`);
+        if(key === procedureKey) {
+          btn.className = "pb-3 active-tab transition whitespace-nowrap flex items-center gap-2";
+        } else {
+          btn.className = "pb-3 text-slate-400 hover:text-slate-200 transition whitespace-nowrap flex items-center gap-2";
+        }
+      });
+
+      updateProcedureView();
+    }
+
+    function updateProcedureView() {
+      const steps = procedureSteps[currentProcedure] || procedureSteps['screen'];
+      const currentStep = steps[currentStepIndex];
+
+      document.getElementById('stepCounter').innerText = `Foto ${currentStepIndex + 1} de ${steps.length}`;
+      document.getElementById('photoBadge').innerText = currentStep.badge;
+      document.getElementById('stepImage').src = currentStep.img;
+      document.getElementById('stepHeadline').innerText = currentStep.headline;
+      document.getElementById('stepDescription').innerText = currentStep.desc;
+      document.getElementById('alertText').innerText = currentStep.alert;
+      document.getElementById('stepTool').innerText = currentStep.tool;
+
+      document.getElementById('btnPrevStep').disabled = (currentStepIndex === 0);
+      document.getElementById('btnNextStep').disabled = (currentStepIndex === steps.length - 1);
+
+      const dotsContainer = document.getElementById('stepDots');
+      dotsContainer.innerHTML = '';
+      steps.forEach((_, idx) => {
+        const dot = document.createElement('div');
+        dot.className = `w-2 h-2 rounded-full ${idx === currentStepIndex ? 'bg-emerald-400 w-4 transition-all' : 'bg-slate-700'}`;
+        dotsContainer.appendChild(dot);
+      });
+    }
+
+    function nextStep() {
+      const steps = procedureSteps[currentProcedure] || procedureSteps['screen'];
+      if(currentStepIndex < steps.length - 1) {
+        currentStepIndex++;
+        updateProcedureView();
+      }
+    }
+
+    function prevStep() {
+      if(currentStepIndex > 0) {
+        currentStepIndex--;
+        updateProcedureView();
+      }
+    }
+
+    function addCustomModel(customName) {
+      if(!customName) return;
+      const newModel = {
+        id: 'custom-' + Date.now(),
+        brand: selectedBrand === 'all' ? 'samsung' : selectedBrand,
+        name: customName.toUpperCase(),
+        code: 'Modelo Genérico de Bancada',
+        diff: 'Média',
+        temp: '80°C - 85°C',
+        screen: 'Display / Touch Screen',
+        battery: 'Bateria Interna Lítio',
+        screws: 'Chave Phillips / Torx',
+        dock: 'Conector de Carga USB'
+      };
+      db.unshift(newModel);
+      selectedModel = newModel;
+      document.getElementById('searchInput').value = '';
+      renderModelList();
+      loadModelData(newModel);
+    }
+  </script>
 </body>
 </html>
