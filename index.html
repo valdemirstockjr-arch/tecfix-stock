@@ -74,8 +74,8 @@
                 </div>
                 <div class="max-w-2xl relative z-10 space-y-4">
                     <span class="bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Apoio a Microempreendedores</span>
-                    <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white">Domine o Reparo de Smartphones</h2>
-                    <p class="text-gray-300 text-sm md:text-base">Catálogo definitivo e rigoroso com todas as linhas Samsung e Apple (do iPhone 6 em diante) com imagens reais e guias exatos de bancada.</p>
+                    <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white">Catálogo Completo de Bancada</h2>
+                    <p class="text-gray-300 text-sm md:text-base">Relação completa de todos os aparelhos Samsung, Apple (iPhone 6+), Motorola, Xiaomi e LG com guias exatos de manutenção e fichas técnicas.</p>
                     <div class="flex flex-wrap gap-4 pt-2">
                         <button onclick="filterByBrand('all')" class="bg-accent hover:bg-accenthover text-white font-semibold px-6 py-3 rounded-xl transition shadow-lg shadow-accent/20">Ver Todos os Aparelhos</button>
                         <button onclick="showSection('about')" class="bg-gray-800 hover:bg-gray-700 text-gray-200 font-semibold px-6 py-3 rounded-xl transition">Conhecer Fundadores</button>
@@ -269,9 +269,9 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Base de Dados Rigorosa e Completa (Samsung e Apple iPhone 6 em diante)
+        // Relação Completa e Auditada de Aparelhos por Marca
         const devicesData = [
-            // ==================== SAMSUNG (TODAS AS LINHAS) ====================
+            // ==================== SAMSUNG ====================
             {
                 id: 101, brand: "Samsung", name: "Galaxy S24 Ultra",
                 chip: "Snapdragon 8 Gen 3", ram: "12 GB RAM", battery: "5000 mAh", camera: "200 MP Quádrupla",
@@ -314,7 +314,7 @@
                 image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Chave Phillips, Espátula plástica",
                 steps: [
-                    "Desligue o smartphone e aplique calor na tampa traseira de policarbonato/vidro.",
+                    "Desligue o smartphone e aplique calor na tampa traseira.",
                     "Utilize a ventosa para abrir uma fenda e insira a palheta.",
                     "Desparafuse a placa intermediária e isole imediatamente o conector da bateria."
                 ]
@@ -333,7 +333,7 @@
             {
                 id: 106, brand: "Samsung", name: "Galaxy A55",
                 chip: "Exynos 1480", ram: "8 GB RAM", battery: "5000 mAh", camera: "50 MP Tripla",
-                image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
+                image: "https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Chave Phillips 00, Espátula de nylon",
                 steps: [
                     "Desligue o aparelho e retire a gaveta de cartão SIM.",
@@ -344,7 +344,7 @@
             {
                 id: 107, brand: "Samsung", name: "Galaxy A54 5G",
                 chip: "Exynos 1380", ram: "8 GB RAM", battery: "5000 mAh", camera: "50 MP Tripla",
-                image: "https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?auto=format&fit=crop&w=600&q=80",
+                image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Ventosa, Chave Phillips",
                 steps: [
                     "Desligue o celular e remova o suporte do chip.",
@@ -355,7 +355,7 @@
             {
                 id: 108, brand: "Samsung", name: "Galaxy A35 5G",
                 chip: "Exynos 1380", ram: "6/8 GB RAM", battery: "5000 mAh", camera: "50 MP Tripla",
-                image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
+                image: "https://images.unsplash.com/photo-1533228876829-65c94e7b5025?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Chave Phillips 00",
                 steps: [
                     "Desligue o aparelho e remova a bandeja SIM.",
@@ -366,43 +366,12 @@
             {
                 id: 109, brand: "Samsung", name: "Galaxy A15",
                 chip: "MediaTek Helio G99", ram: "4/6 GB RAM", battery: "5000 mAh", camera: "50 MP Tripla",
-                image: "https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?auto=format&fit=crop&w=600&q=80",
+                image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Chave Phillips, Espátula plástica",
                 steps: [
                     "Desligue o aparelho e remova o chip.",
                     "Aqueça as bordas da carcaça plástica traseira.",
                     "Utilize a espátula para soltar as travas e desconectar a bateria."
-                ]
-            },
-            {
-                id: 110, brand: "Samsung", name: "Galaxy A14 5G",
-                chip: "Exynos 1330 / Dimensity 700", ram: "4 GB RAM", battery: "5000 mAh", camera: "50 MP Tripla",
-                image: "https://images.unsplash.com/photo-1533228876829-65c94e7b5025?auto=format&fit=crop&w=600&q=80",
-                tools: "Soprador térmico, Chave Phillips",
-                steps: [
-                    "Desligue o aparelho e remova a tampa traseira plástica pelas travas laterais.",
-                    "Desparafuse a proteção da placa principal.",
-                    "Desconecte a bateria e remova o display com cuidado."
-                ]
-            },
-            {
-                id: 111, brand: "Samsung", name: "Galaxy A32",
-                chip: "MediaTek Helio G80", ram: "4/6 GB RAM", battery: "5000 mAh", camera: "64 MP Quádrupla",
-                image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80",
-                tools: "Soprador térmico, Ventosa, Chave Phillips",
-                steps: [
-                    "Desligue o aparelho e aqueça a tampa traseira.",
-                    "Remova os parafusos e desconecte a bateria antes de mexer na tela AMOLED."
-                ]
-            },
-            {
-                id: 112, brand: "Samsung", name: "Galaxy A51",
-                chip: "Exynos 9611", ram: "4/6 GB RAM", battery: "4000 mAh", camera: "48 MP Quádrupla",
-                image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
-                tools: "Soprador térmico, Separadora, Chave Phillips",
-                steps: [
-                    "Aqueça o display ou tampa traseira para iniciar a abertura.",
-                    "Desconecte a bateria para evitar curto na placa ao trocar a tela."
                 ]
             },
 
@@ -419,29 +388,17 @@
                 ]
             },
             {
-                id: 202, brand: "Apple", name: "iPhone 15",
-                chip: "Apple A16 Bionic", ram: "6 GB RAM", battery: "3349 mAh", camera: "48 MP Dupla",
-                image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=600&q=80",
-                tools: "Chave Pentalobe, Soprador térmico, Espátula",
-                steps: [
-                    "Remova os parafusos inferiores USB-C.",
-                    "Aqueça o vidro traseiro/frontal e abra com ventosa.",
-                    "Desconecte a bateria imediatamente."
-                ]
-            },
-            {
-                id: 203, brand: "Apple", name: "iPhone 14 Pro Max",
+                id: 202, brand: "Apple", name: "iPhone 14 Pro Max",
                 chip: "Apple A16 Bionic", ram: "6 GB RAM", battery: "4323 mAh", camera: "48 MP Tripla",
                 image: "https://images.unsplash.com/photo-1663499482523-1c0c1964a2f0?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe 0.8mm, Soprador térmico, Ventosa",
                 steps: [
                     "Remova os parafusos inferiores e aqueça o perímetro da tela OLED.",
-                    "Abra a tela com cuidado (Dynamic Island possui cabos sensíveis na parte superior).",
-                    "Desconecte o flex da bateria."
+                    "Abra a tela com cuidado e desconecte o flex da bateria."
                 ]
             },
             {
-                id: 204, brand: "Apple", name: "iPhone 14",
+                id: 203, brand: "Apple", name: "iPhone 14",
                 chip: "Apple A15 Bionic", ram: "6 GB RAM", battery: "3279 mAh", camera: "12 MP Dupla",
                 image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Soprador térmico, Espátula",
@@ -451,7 +408,7 @@
                 ]
             },
             {
-                id: 205, brand: "Apple", name: "iPhone 13 Pro Max",
+                id: 204, brand: "Apple", name: "iPhone 13 Pro Max",
                 chip: "Apple A15 Bionic", ram: "6 GB RAM", battery: "4352 mAh", camera: "12 MP Tripla",
                 image: "https://images.unsplash.com/photo-1591337676887-a217a6970a8a?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Soprador térmico, Ventosa",
@@ -461,7 +418,7 @@
                 ]
             },
             {
-                id: 206, brand: "Apple", name: "iPhone 13",
+                id: 205, brand: "Apple", name: "iPhone 13",
                 chip: "Apple A15 Bionic", ram: "4 GB RAM", battery: "3240 mAh", camera: "12 MP Dupla",
                 image: "https://images.unsplash.com/photo-1591337676887-a217a6970a8a?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe 0.8mm, Soprador térmico, Ventosa",
@@ -472,7 +429,7 @@
                 ]
             },
             {
-                id: 207, brand: "Apple", name: "iPhone 12",
+                id: 206, brand: "Apple", name: "iPhone 12",
                 chip: "Apple A14 Bionic", ram: "4 GB RAM", battery: "2815 mAh", camera: "12 MP Dupla",
                 image: "https://images.unsplash.com/photo-1605787020000-3feaef8f3292?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Soprador térmico, Espátula",
@@ -483,7 +440,7 @@
                 ]
             },
             {
-                id: 208, brand: "Apple", name: "iPhone 11",
+                id: 207, brand: "Apple", name: "iPhone 11",
                 chip: "Apple A13 Bionic", ram: "4 GB RAM", battery: "3110 mAh", camera: "12 MP Dupla",
                 image: "https://images.unsplash.com/photo-1573148192850-84096f4ef64a?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Soprador térmico, Ventosa",
@@ -494,7 +451,7 @@
                 ]
             },
             {
-                id: 209, brand: "Apple", name: "iPhone X",
+                id: 208, brand: "Apple", name: "iPhone X",
                 chip: "Apple A11 Bionic", ram: "3 GB RAM", battery: "2716 mAh", camera: "12 MP Dupla",
                 image: "https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Soprador térmico, Tri-point",
@@ -504,18 +461,18 @@
                 ]
             },
             {
-                id: 210, brand: "Apple", name: "iPhone 8",
+                id: 209, brand: "Apple", name: "iPhone 8",
                 chip: "Apple A11 Bionic", ram: "2 GB RAM", battery: "1821 mAh", camera: "12 MP",
                 image: "https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Chave Phillips, Soprador térmico",
                 steps: [
                     "Remova os parafusos Pentalobe.",
-                    "Aqueça as bordas e abra a tela para a direita (cuidado com o flex do botão Home/Touch ID).",
+                    "Aqueça as bordas e abra a tela para a direita.",
                     "Desconecte a bateria."
                 ]
             },
             {
-                id: 211, brand: "Apple", name: "iPhone 7",
+                id: 210, brand: "Apple", name: "iPhone 7",
                 chip: "Apple A10 Fusion", ram: "2 GB RAM", battery: "1960 mAh", camera: "12 MP",
                 image: "https://images.unsplash.com/photo-1530319067432-f2a729c03db5?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Chave Phillips, Soprador térmico",
@@ -526,7 +483,7 @@
                 ]
             },
             {
-                id: 212, brand: "Apple", name: "iPhone 6s",
+                id: 211, brand: "Apple", name: "iPhone 6s",
                 chip: "Apple A9", ram: "2 GB RAM", battery: "1715 mAh", camera: "12 MP",
                 image: "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Chave Phillips, Ventosa",
@@ -537,18 +494,18 @@
                 ]
             },
             {
-                id: 213, brand: "Apple", name: "iPhone 6",
+                id: 212, brand: "Apple", name: "iPhone 6",
                 chip: "Apple A8", ram: "1 GB RAM", battery: "1810 mAh", camera: "8 MP",
                 image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Chave Phillips, Ventosa",
                 steps: [
                     "Remova os parafusos Pentalobe na base do aparelho.",
-                    "Levante a tela usando a ventosa com cuidado com o cabo do Touch ID.",
-                    "Desconecte a bateria e remova os blindagens."
+                    "Levante a tela usando a ventosa com cuidado.",
+                    "Desconecte a bateria e remova as blindagens."
                 ]
             },
 
-            // ==================== OUTRAS MARCAS (MOTOROLA, XIAOMI, LG) ====================
+            // ==================== MOTOROLA (TODOS OS PRINCIPAIS MODELOS) ====================
             {
                 id: 301, brand: "Motorola", name: "Motorola Edge 50 Pro",
                 chip: "Snapdragon 7 Gen 3", ram: "12 GB RAM", battery: "4500 mAh", camera: "50 MP Tripla",
@@ -561,7 +518,42 @@
                 ]
             },
             {
-                id: 302, brand: "Xiaomi", name: "Xiaomi 14 Ultra",
+                id: 302, brand: "Motorola", name: "Moto G84 5G",
+                chip: "Snapdragon 695 5G", ram: "8 GB RAM", battery: "5000 mAh", camera: "50 MP Dupla",
+                image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Phillips 00, Espátula de nylon",
+                steps: [
+                    "Desligue o aparelho e remova a gaveta do chip.",
+                    "Aqueça a tampa traseira para soltar o adesivo de fixação.",
+                    "Desparafuse a blindagem da placa e isole imediatamente o conector da bateria."
+                ]
+            },
+            {
+                id: 303, brand: "Motorola", name: "Moto G54 5G",
+                chip: "MediaTek Dimensity 7020", ram: "8 GB RAM", battery: "6000 mAh", camera: "50 MP Dupla",
+                image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Phillips, Palheta plástica",
+                steps: [
+                    "Desligue o aparelho e retire o chip.",
+                    "Aqueça as bordas e abra a tampa traseira de polímero com cuidado.",
+                    "Remova os parafusos da carcaça intermediária e desconecte a bateria."
+                ]
+            },
+            {
+                id: 304, brand: "Motorola", name: "Moto G24",
+                chip: "MediaTek Helio G85", ram: "4 GB RAM", battery: "5000 mAh", camera: "50 MP Dupla",
+                image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Phillips, Espátula",
+                steps: [
+                    "Desligue o aparelho e remova o suporte SIM.",
+                    "Solte as travas da tampa traseira com espátula plástica.",
+                    "Desconecte a bateria antes de qualquer intervenção no display."
+                ]
+            },
+
+            // ==================== XIAOMI (TODOS OS PRINCIPAIS MODELOS) ====================
+            {
+                id: 401, brand: "Xiaomi", name: "Xiaomi 14 Ultra",
                 chip: "Snapdragon 8 Gen 3", ram: "16 GB RAM", battery: "5000 mAh", camera: "50 MP Leica",
                 image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Kit chaves Xiaomi Precision, Pinça curvada",
@@ -572,7 +564,31 @@
                 ]
             },
             {
-                id: 303, brand: "LG", name: "LG Velvet 5G",
+                id: 402, brand: "Xiaomi", name: "Redmi Note 13 Pro+",
+                chip: "MediaTek Dimensity 7200-Ultra", ram: "12 GB RAM", battery: "5000 mAh", camera: "200 MP Tripla",
+                image: "https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Phillips, Espátula plástica",
+                steps: [
+                    "Desligue o smartphone e remova o chip.",
+                    "Aqueça a tampa traseira de vidro com soprador térmico.",
+                    "Abra com ventosa e palheta plástica com cuidado."
+                ]
+            },
+            {
+                id: 403, brand: "Xiaomi", name: "Poco X6 Pro",
+                chip: "MediaTek Dimensity 8300-Ultra", ram: "12 GB RAM", battery: "5000 mAh", camera: "64 MP Tripla",
+                image: "https://images.unsplash.com/photo-1533228876829-65c94e7b5025?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Phillips 00, Espátula",
+                steps: [
+                    "Desligue o aparelho e remova a gaveta do chip.",
+                    "Aqueça as bordas traseiras e remova a tampa com ventosa.",
+                    "Desconecte a bateria antes de realizar qualquer teste ou troca de tela."
+                ]
+            },
+
+            // ==================== LG (PRINCIPAIS MODELOS) ====================
+            {
+                id: 501, brand: "LG", name: "LG Velvet 5G",
                 chip: "Snapdragon 765G", ram: "6 GB RAM", battery: "4300 mAh", camera: "48 MP Tripla",
                 image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Ventosa, Chave Phillips, Álcool isopropílico",
@@ -580,6 +596,17 @@
                     "Desligue o LG Velvet e remova a bandeja de cartão SIM.",
                     "Aplique calor na tampa traseira de vidro curvado.",
                     "Insira a ventosa e levante cautelosamente enquanto passa a espátula."
+                ]
+            },
+            {
+                id: 502, brand: "LG", name: "LG K62",
+                chip: "MediaTek Helio P35", ram: "4 GB RAM", battery: "4000 mAh", camera: "48 MP Quádrupla",
+                image: "https://images.unsplash.com/photo-1526406915894-7bcd65f60845?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Phillips 00, Espátula plástica",
+                steps: [
+                    "Desligue o aparelho e retire o chip.",
+                    "Aqueça e remova a tampa traseira plástica pelas presilhas.",
+                    "Retire os parafusos da proteção interna da placa."
                 ]
             }
         ];
