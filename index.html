@@ -1,138 +1,652 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TecFix Stock - Guia Profissional de Reparo</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#f0fdf4',
-              100: '#dcfce7',
-              500: '#22c55e',
-              600: '#16a34a',
-              700: '#15803d',
-              800: '#166534',
-              900: '#14532d',
-            },
-            stock: {
-              400: '#38bdf8',
-              500: '#0284c7',
-              600: '#0369a1',
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecfix Stock - Manutenção e Fichas Técnicas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0b0f19',
+                        cardbg: '#131c2e',
+                        accent: '#ef4444',
+                        accenthover: '#dc2626'
+                    }
+                }
             }
-          }
         }
-      }
-    }
-  </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  </style>
+    </script>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+<body class="bg-darkbg text-gray-100 font-sans antialiased min-h-screen flex flex-col selection:bg-accent selection:text-white">
 
-  <!-- Cabeçalho -->
-  <header class="bg-slate-800 border-b border-slate-700 sticky top-0 z-40 shadow-lg">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-      <div class="flex items-center gap-3 cursor-pointer" onclick="showHome()">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-green-500 to-sky-500 flex items-center justify-center text-white font-bold text-xl shadow-md">
-          <i class="fa-solid fa-wrench"></i>
+    <!-- HEADER / NAV -->
+    <header class="sticky top-0 z-50 bg-darkbg/95 backdrop-blur border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showSection('home')">
+                <div class="w-10 h-10 rounded-xl bg-accent flex items-center justify-center text-white shadow-lg shadow-accent/30">
+                    <i class="fa-solid fa-screwdriver-wrench text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-black tracking-wider text-white">TECFIX <span class="text-accent">STOCK</span></h1>
+                    <p class="text-xs text-gray-400">Manutenção & Fichas Técnicas</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                <button onclick="showSection('home')" class="hover:text-accent transition">Início & Catálogo</button>
+                <button onclick="showSection('toolbox')" class="hover:text-accent transition">Ferramental</button>
+                <button onclick="showSection('budget')" class="hover:text-accent transition">Simulador Orçamento</button>
+                <button onclick="showSection('inventory')" class="hover:text-accent transition">Estoque Peças</button>
+                <button onclick="showSection('about')" class="hover:text-accent transition">Sobre & Fundadores</button>
+            </nav>
+            <div class="flex items-center space-x-3">
+                <div class="relative hidden sm:block">
+                    <input type="text" id="globalSearch" placeholder="Buscar aparelho..." onkeyup="filterDevices()" class="bg-cardbg border border-gray-700 rounded-lg px-4 py-2 text-sm text-white focus:outline-none focus:border-accent w-48 lg:w-64">
+                    <i class="fa-solid fa-search absolute right-3 top-3 text-gray-400 text-sm"></i>
+                </div>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
         </div>
-        <div>
-          <div class="flex items-center gap-1.5">
-            <span class="font-black text-xl tracking-tight text-white">TecFix</span>
-            <span class="bg-gradient-to-r from-sky-400 to-blue-500 text-slate-950 font-black text-xs px-2 py-0.5 rounded-full uppercase tracking-wider shadow-sm">STOCK</span>
-          </div>
-          <p class="text-[10px] text-slate-400 font-medium">Manutenção Técnica Profissional</p>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-cardbg border-b border-gray-800 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="showSection('home'); toggleMobileMenu();" class="block w-full text-left py-2 hover:text-accent">Início & Catálogo</button>
+            <button onclick="showSection('toolbox'); toggleMobileMenu();" class="block w-full text-left py-2 hover:text-accent">Ferramental</button>
+            <button onclick="showSection('budget'); toggleMobileMenu();" class="block w-full text-left py-2 hover:text-accent">Simulador Orçamento</button>
+            <button onclick="showSection('inventory'); toggleMobileMenu();" class="block w-full text-left py-2 hover:text-accent">Estoque Peças</button>
+            <button onclick="showSection('about'); toggleMobileMenu();" class="block w-full text-left py-2 hover:text-accent">Sobre & Fundadores</button>
         </div>
-      </div>
+    </header>
 
-      <div class="flex-1 max-w-md hidden md:block">
-        <div class="relative">
-          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-          <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Buscar modelo (ex: iPhone 13, Redmi Note 11, Galaxy S22)..." class="w-full bg-slate-900/80 border border-slate-700 rounded-lg pl-9 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all">
-        </div>
-      </div>
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
 
-      <div class="flex items-center gap-2">
-        <button onclick="toggleFavoritesView()" class="p-2 rounded-lg bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-amber-400 transition relative">
-          <i class="fa-solid fa-bookmark text-lg"></i>
-          <span id="favBadge" class="hidden absolute -top-1 -right-1 bg-amber-500 text-slate-950 text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
-        </button>
-        <button onclick="showModal('addModal')" class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white font-semibold text-xs uppercase tracking-wider px-3 py-2 rounded-lg transition shadow-md">
-          <i class="fa-solid fa-plus"></i> Novo Guia
-        </button>
-      </div>
+        <!-- SECTION: HOME / CATALOG -->
+        <section id="sec-home" class="space-y-8">
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-cardbg to-gray-900 border border-gray-800 rounded-2xl p-8 md:p-12 shadow-xl relative overflow-hidden">
+                <div class="absolute right-0 bottom-0 opacity-10 translate-x-10 translate-y-10 pointer-events-none">
+                    <i class="fa-solid fa-mobile-screen-button text-9xl text-white"></i>
+                </div>
+                <div class="max-w-2xl relative z-10 space-y-4">
+                    <span class="bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Apoio a Microempreendedores</span>
+                    <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white">Domine o Reparo de Smartphones</h2>
+                    <p class="text-gray-300 text-sm md:text-base">Catálogo completo de fichas técnicas e guias passo a passo de manutenção (abertura, troca de tela e bateria) para impulsionar a sua assistência técnica do zero ao profissional.</p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <button onclick="filterByBrand('all')" class="bg-accent hover:bg-accenthover text-white font-semibold px-6 py-3 rounded-xl transition shadow-lg shadow-accent/20">Ver Aparelhos</button>
+                        <button onclick="showSection('about')" class="bg-gray-800 hover:bg-gray-700 text-gray-200 font-semibold px-6 py-3 rounded-xl transition">Conhecer Fundadores</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand Filters -->
+            <div class="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none">
+                <button onclick="filterByBrand('all')" class="brand-btn active-brand bg-accent text-white px-5 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition shadow">Todos</button>
+                <button onclick="filterByBrand('Apple')" class="brand-btn bg-cardbg hover:bg-gray-800 text-gray-300 px-5 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition border border-gray-800">Apple</button>
+                <button onclick="filterByBrand('Samsung')" class="brand-btn bg-cardbg hover:bg-gray-800 text-gray-300 px-5 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition border border-gray-800">Samsung</button>
+                <button onclick="filterByBrand('Xiaomi')" class="brand-btn bg-cardbg hover:bg-gray-800 text-gray-300 px-5 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition border border-gray-800">Xiaomi</button>
+                <button onclick="filterByBrand('Motorola')" class="brand-btn bg-cardbg hover:bg-gray-800 text-gray-300 px-5 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition border border-gray-800">Motorola</button>
+                <button onclick="filterByBrand('LG')" class="brand-btn bg-cardbg hover:bg-gray-800 text-gray-300 px-5 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition border border-gray-800">LG</button>
+            </div>
+
+            <!-- Devices Grid -->
+            <div id="devicesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Preenchido via JavaScript -->
+            </div>
+        </section>
+
+        <!-- SECTION: TOOLBOX -->
+        <section id="sec-toolbox" class="hidden space-y-6">
+            <div class="border-b border-gray-800 pb-4">
+                <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-toolbox text-accent mr-2"></i> Ferramental de Bancada</h2>
+                <p class="text-sm text-gray-400">Equipamentos essenciais para iniciar com segurança na manutenção de celulares.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="toolsGrid">
+                <!-- Conteúdo gerado via JS -->
+            </div>
+        </section>
+
+        <!-- SECTION: BUDGET SIMULATOR -->
+        <section id="sec-budget" class="hidden space-y-6 max-w-2xl mx-auto">
+            <div class="border-b border-gray-800 pb-4 text-center">
+                <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-calculator text-accent mr-2"></i> Simulador de Orçamento</h2>
+                <p class="text-sm text-gray-400">Calcule o preço de venda sugerido para seus serviços de reparo.</p>
+            </div>
+            <div class="bg-cardbg border border-gray-800 rounded-2xl p-6 md:p-8 space-y-4 shadow-xl">
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1">Custo da Peça (R$)</label>
+                    <input type="number" id="costPart" placeholder="Ex: 120.00" class="w-full bg-darkbg border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1">Tempo Estimado de Mão de Obra (Horas)</label>
+                    <input type="number" id="costHours" placeholder="Ex: 1" class="w-full bg-darkbg border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1">Valor da Hora Técnica (R$)</label>
+                    <input type="number" id="hourRate" value="60" class="w-full bg-darkbg border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1">Margem de Lucro Desejada (%)</label>
+                    <input type="number" id="profitMargin" value="40" class="w-full bg-darkbg border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent">
+                </div>
+                <button onclick="calculateBudget()" class="w-full bg-accent hover:bg-accenthover text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-accent/20">Calcular Orçamento Sugerido</button>
+                <div id="budgetResult" class="hidden mt-6 p-4 bg-darkbg border border-gray-700 rounded-xl space-y-2">
+                    <!-- Resultado -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: INVENTORY -->
+        <section id="sec-inventory" class="hidden space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-800 pb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-boxes-stacked text-accent mr-2"></i> Controle de Estoque Rápido</h2>
+                    <p class="text-sm text-gray-400">Gerencie telas, baterias e componentes em sua bancada.</p>
+                </div>
+                <button onclick="openAddPartModal()" class="bg-accent hover:bg-accenthover text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition flex items-center space-x-2">
+                    <i class="fa-solid fa-plus"></i><span>Nova Peça</span>
+                </button>
+            </div>
+            <div class="bg-cardbg border border-gray-800 rounded-2xl overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-900/60 border-b border-gray-800 text-xs text-gray-400 uppercase tracking-wider">
+                                <th class="p-4">Item / Peça</th>
+                                <th class="p-4">Modelo Compatível</th>
+                                <th class="p-4">Qtd. Estoque</th>
+                                <th class="p-4">Preço Custo</th>
+                                <th class="p-4">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody" class="divide-y divide-gray-800 text-sm">
+                            <!-- Preenchido via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: ABOUT & FOUNDERS -->
+        <section id="sec-about" class="hidden space-y-8 max-w-4xl mx-auto">
+            <div class="border-b border-gray-800 pb-4 text-center">
+                <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-users text-accent mr-2"></i> Sobre o Tecfix Stock & Fundadores</h2>
+                <p class="text-sm text-gray-400">Nossa missão e idealizadores.</p>
+            </div>
+            <div class="bg-cardbg border border-gray-800 rounded-2xl p-8 space-y-6 shadow-xl">
+                <div class="space-y-3">
+                    <h3 class="text-xl font-bold text-white">Nossa Proposta</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        O <strong>Tecfix Stock</strong> nasceu com o propósito firme de <strong>ajudar microempreendedores e pessoas que estão iniciando no ramo de manutenção de celulares</strong>. Fornecemos fichas técnicas detalhadas e manuais práticos de bancada para que qualquer técnico iniciante possa realizar trocas de tela, substituição de baterias e diagnósticos com total segurança, precisão e profissionalismo.
+                    </p>
+                </div>
+                <div class="border-t border-gray-800 pt-6">
+                    <h3 class="text-xl font-bold text-white mb-6">Idealizadores e Fundadores</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="bg-darkbg border border-gray-800 p-6 rounded-xl flex items-center space-x-4">
+                            <div class="w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center text-accent text-2xl font-black">
+                                V
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white">Valdemir Stock</h4>
+                                <p class="text-xs text-accent uppercase tracking-wider font-semibold">Co-Fundador & Estrategista</p>
+                            </div>
+                        </div>
+                        <div class="bg-darkbg border border-gray-800 p-6 rounded-xl flex items-center space-x-4">
+                            <div class="w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center text-accent text-2xl font-black">
+                                W
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white">Wesley Nunes Stock</h4>
+                                <p class="text-xs text-accent uppercase tracking-wider font-semibold">Co-Fundador & Técnico Especialista</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL: DETALHES DO APARELHO & GUIA DE MANUTENÇÃO -->
+    <div id="deviceModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-cardbg border border-gray-800 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 space-y-6 relative shadow-2xl">
+            <button onclick="closeDeviceModal()" class="absolute right-4 top-4 text-gray-400 hover:text-white bg-darkbg p-2 rounded-xl border border-gray-800">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div id="modalContent" class="space-y-6">
+                <!-- Conteúdo injetado via JS -->
+            </div>
+        </div>
     </div>
 
-    <!-- Barra de busca mobile -->
-    <div class="px-4 pb-3 md:hidden">
-      <div class="relative">
-        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-        <input type="text" id="searchInputMobile" oninput="handleSearchMobile()" placeholder="Buscar marca ou modelo..." class="w-full bg-slate-900 border border-slate-700 rounded-lg pl-9 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-green-500">
-      </div>
-    </div>
-  </header>
-
-  <!-- Conteúdo Principal -->
-  <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 space-y-6">
-
-    <!-- Seção de Seleção de Marcas -->
-    <section id="brandSection">
-      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-        <i class="fa-solid fa-mobile-screen-button text-green-500"></i> Selecione a Marca
-      </h2>
-      <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar" id="brandsContainer">
-        <!-- Injetado via JS -->
-      </div>
-    </section>
-
-    <!-- Banner TecFix Stock -->
-    <section id="heroBanner" class="bg-gradient-to-r from-slate-800 via-slate-800 to-slate-800/90 border border-slate-700/80 rounded-2xl p-6 relative overflow-hidden shadow-xl">
-      <div class="absolute -right-8 -bottom-8 opacity-10 text-slate-100 pointer-events-none">
-        <i class="fa-solid fa-screwdriver-wrench text-[180px]"></i>
-      </div>
-      <div class="max-w-xl relative z-10 space-y-2">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-700/80 border border-slate-600 text-xs text-sky-400 font-semibold mb-1">
-          <i class="fa-solid fa-microchip"></i> Ecossistema TecFix Stock
+    <!-- MODAL: ADICIONAR PEÇA NO ESTOQUE -->
+    <div id="partModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-cardbg border border-gray-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
+            <h3 class="text-lg font-bold text-white">Adicionar Peça ao Estoque</h3>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1">Nome do Item</label>
+                    <input type="text" id="partName" placeholder="Ex: Tela Frontal OLED" class="w-full bg-darkbg border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-accent">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1">Modelo Compatível</label>
+                    <input type="text" id="partModel" placeholder="Ex: iPhone 14 Pro" class="w-full bg-darkbg border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-accent">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1">Quantidade</label>
+                        <input type="number" id="partQty" value="1" class="w-full bg-darkbg border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-accent">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1">Preço Custo (R$)</label>
+                        <input type="number" id="partPrice" placeholder="0.00" class="w-full bg-darkbg border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-accent">
+                    </div>
+                </div>
+            </div>
+            <div class="flex space-x-3 pt-2">
+                <button onclick="closeAddPartModal()" class="flex-1 bg-gray-800 hover:bg-gray-700 text-gray-300 font-semibold py-2.5 rounded-xl text-sm transition">Cancelar</button>
+                <button onclick="saveNewPart()" class="flex-1 bg-accent hover:bg-accenthover text-white font-semibold py-2.5 rounded-xl text-sm transition">Salvar Peça</button>
+            </div>
         </div>
-        <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
-          Guia Técnico de Desmontagem & Reparo
-        </h1>
-        <p class="text-slate-400 text-sm leading-relaxed">
-          Passo a passo interativo para troca de telas, baterias, conectores e conectores com checklist de ferramentas para a sua bancada.
-        </p>
-      </div>
-    </section>
+    </div>
 
-    <!-- Filtro de Categorias de Reparo -->
-    <section id="categorySection">
-      <div class="flex items-center justify-between mb-3">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-          <i class="fa-solid fa-list-check text-sky-400"></i> Tipo de Reparo
-        </h2>
-        <span id="resultsCount" class="text-xs text-slate-400">Exibindo modelos</span>
-      </div>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="categoriesContainer">
-        <!-- Injetado via JS -->
-      </div>
-    </section>
+    <!-- FOOTER -->
+    <footer class="bg-darkbg border-t border-gray-800 mt-16 py-8 text-center text-sm text-gray-400 space-y-3">
+        <div class="flex items-center justify-center space-x-2">
+            <div class="w-6 h-6 rounded-lg bg-accent flex items-center justify-center text-white text-xs">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+            </div>
+            <span class="font-bold text-white tracking-wider">TECFIX STOCK</span>
+        </div>
+        <p>Apoio Técnico para Microempreendedores &bull; Fundado por Valdemir Stock & Wesley Nunes Stock</p>
+        <p class="text-xs text-gray-600">&copy; 2026 Tecfix Stock. Todos os direitos reservados.</p>
+    </footer>
 
-    <!-- Lista de Modelos de Celulares -->
-    <section id="modelsSection">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="modelsGrid">
-        <!-- Injetado via JS -->
-      </div>
-      <div id="noResults" class="hidden text-center py-12 space-y-3">
-        <i class="fa-solid fa-bug text-4xl text-slate-600"></i>
-        <p class="text-slate-400 text-sm">Nenhum modelo ou reparo encontrado com os filtros atuais.</p>
-        <button onclick="resetFilters()" class="text-xs text-green-400 underline hover:text-green-300">Limpar filtros de busca</button>
-      </div>
-    </section>
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Base de Dados de Aparelhos e Guias de Manutenção
+        const devicesData = [
+            {
+                id: 1,
+                brand: "Apple",
+                name: "iPhone 15 Pro Max",
+                chip: "Apple A17 Pro (3 nm)",
+                ram: "8 GB RAM",
+                battery: "4441 mAh",
+                camera: "48 MP Tripla",
+                image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=600&q=80",
+                tools: "Chave Pentalobe 0.8mm, Soprador térmico, Ventosa de sucção, Espátula plástica antistática",
+                steps: [
+                    "Desligue completamente o aparelho e remova a gaveta do chip SIM.",
+                    "Remova os dois parafusos Pentalobe localizados ao lado da entrada USB-C.",
+                    "Aqueça levemente as bordas traseiras e frontais com o soprador térmico (cuidado com o display OLED delicado) para amolecer a cola.",
+                    "Utilize a ventosa e a espátula plástica para abrir a tela com cuidado, descolando pelas laterais.",
+                    "Desconecte a bateria antes de qualquer outro conector flex para evitar curto-circuito na placa."
+                ]
+            },
+            {
+                id: 2,
+                brand: "Samsung",
+                name: "Galaxy S24 Ultra",
+                chip: "Snapdragon 8 Gen 3 for Galaxy",
+                ram: "12 GB RAM",
+                battery: "5000 mAh",
+                camera: "200 MP Quádrupla",
+                image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80",
+                tools: "Separadora térmica, Ventosa, Chave Phillips 00, Álcool Isopropílico 99%",
+                steps: [
+                    "Desligue o aparelho e remova a S-Pen para evitar danos estruturais.",
+                    "Posicione o celular na separadora térmica a cerca de 80°C por 3 minutos para soltar a tampa traseira de vidro.",
+                    "Insira uma lâmina plástica fina ou palheta e passe álcool isopropílico para dissolver o adesivo perimetral.",
+                    "Remova os parafusos da blindagem interna superior para ter acesso aos conectores das antenas e bateria.",
+                    "Desconecte o cabo flex da bateria antes de prosseguir com troca de tela ou câmera."
+                ]
+            },
+            {
+                id: 3,
+                brand: "Xiaomi",
+                name: "Xiaomi 14 Ultra",
+                chip: "Snapdragon 8 Gen 3",
+                ram: "16 GB RAM",
+                battery: "5000 mAh",
+                camera: "50 MP Leica Quádrupla",
+                image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Kit de chaves Xiaomi Precision, Pinça curvada de precisão",
+                steps: [
+                    "Remova a capa protetora e desligue o aparelho. Retire a bandeja do chip.",
+                    "Aqueça a tampa traseira de couro sintético/vidro uniformemente nas bordas.",
+                    "Com a ventosa, puxe levemente e introduza a espátula plástica para destravar as presilhas.",
+                    "Desaparafuse a cobertura plástica da placa-mãe.",
+                    "Desconecte a bateria e o flex do display com auxílio de uma pinça antistática."
+                ]
+            },
+            {
+                id: 4,
+                brand: "Motorola",
+                name: "Motorola Edge 50 Pro",
+                chip: "Snapdragon 7 Gen 3",
+                ram: "12 GB RAM",
+                battery: "4500 mAh",
+                camera: "50 MP Tripla",
+                image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Torx T3, Espátula metálica fina",
+                steps: [
+                    "Desligue o smartphone e aqueça a tampa traseira curva.",
+                    "Utilize a ventosa para criar abertura e deslize a palheta plástica.",
+                    "Desconecte o leitor de impressão digital localizado na tampa traseira com cuidado para não romper o cabo flex.",
+                    "Remova os parafusos da carcaça intermediária.",
+                    "Desconecte a bateria e faça a substituição dos componentes necessários."
+                ]
+            },
+            {
+                id: 5,
+                brand: "Samsung",
+                name: "Galaxy A55",
+                chip: "Exynos 1480",
+                ram: "8 GB RAM",
+                battery: "5000 mAh",
+                camera: "50 MP Tripla",
+                image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Chave Phillips 00, Espátula de nylon",
+                steps: [
+                    "Desligue o aparelho completamente e retire o suporte do chip SIM/MicroSD.",
+                    "Aqueça as bordas traseiras por 2 minutos para amolecer a dupla face.",
+                    "Insira a espátula plástica na junta inferior e abra a tampa com cuidado.",
+                    "Desparafuse a moldura superior para expor a placa principal.",
+                    "Sempre isole ou desconecte a bateria antes de desconectar o display."
+                ]
+            },
+            {
+                id: 6,
+                brand: "LG",
+                name: "LG Velvet 5G",
+                chip: "Snapdragon 765G",
+                ram: "6 GB RAM",
+                battery: "4300 mAh",
+                camera: "48 MP Tripla",
+                image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80",
+                tools: "Soprador térmico, Ventosa, Chave Phillips, Álcool isopropílico",
+                steps: [
+                    "Desligue o LG Velvet e remova a bandeja de cartão SIM.",
+                    "Aplique calor na tampa traseira de vidro curvado.",
+                    "Insira a ventosa e levante cautelosamente enquanto passa a espátula.",
+                    "Remova os parafusos da blindagem interna.",
+                    "Desconecte a bateria antes de realizar qualquer reparo de tela ou conector de carga."
+                ]
+            }
+        ];
+
+        // Ferramental de Bancada
+        const toolsData = [
+            { name: "Soprador Térmico / Estação de Ar", desc: "Fundamental para amolecer colas de tampas traseiras e displays.", icon: "fa-wind" },
+            { name: "Kit de Chaves de Precisão", desc: "Chaves Phillips, Pentalobe, Torx e Tri-point para abrir qualquer modelo.", icon: "fa-screwdriver" },
+            { name: "Multímetro Digital", desc: "Essencial para testar curto-circuitos, tensão de baterias e trilhas.", icon: "fa-bolt" },
+            { name: "Fonte de Bancada Ajustável", desc: "Permite dar choque em baterias inativas e testar consumo de placa.", icon: "fa-plug" },
+            { name: "Separadora LCD a Vácuo", desc: "Auxilia na separação segura de vidros e telas coladas.", icon: "fa-tablet-screen-button" },
+            { name: "Pinças e Espátulas Anti-estáticas", desc: "Evitam danos a componentes sensíveis e cabos flex durante o manuseio.", icon: "fa-hand" }
+        ];
+
+        // Estoque Inicial
+        let inventoryData = [
+            { id: 1, name: "Tela Frontal OLED", model: "iPhone 15 Pro Max", qty: 3, price: 450.00 },
+            { id: 2, name: "Bateria Original", model: "Galaxy S24 Ultra", qty: 5, price: 120.00 },
+            { id: 3, name: "Conector de Carga Tipo-C", model: "Xiaomi 14 Ultra", qty: 8, price: 25.00 },
+            { id: 4, name: "Tela LCD + Touch", model: "Galaxy A55", qty: 4, price: 160.00 }
+        ];
+
+        // Navegação entre Seções
+        function showSection(sectionId) {
+            const sections = ['home', 'toolbox', 'budget', 'inventory', 'about'];
+            sections.forEach(s => {
+                const el = document.getElementById('sec-' + s);
+                if (s === sectionId) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Renderizar Aparelhos
+        function renderDevices(list) {
+            const grid = document.getElementById('devicesGrid');
+            grid.innerHTML = '';
+            if (list.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400">Nenhum aparelho encontrado.</div>`;
+                return;
+            }
+            list.forEach(dev => {
+                grid.innerHTML += `
+                    <div class="bg-cardbg border border-gray-800 rounded-2xl overflow-hidden shadow-xl hover:border-gray-700 transition flex flex-col">
+                        <div class="h-48 overflow-hidden bg-gray-900 relative">
+                            <img src="${dev.image}" alt="${dev.name}" class="w-full h-full object-cover opacity-80 hover:scale-105 transition duration-300">
+                            <span class="absolute top-3 left-3 bg-darkbg/80 backdrop-blur text-accent text-xs font-semibold px-3 py-1 rounded-full border border-gray-800">${dev.brand}</span>
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                            <div>
+                                <h3 class="text-lg font-bold text-white mb-2">${dev.name}</h3>
+                                <div class="space-y-1 text-xs text-gray-400">
+                                    <p><strong class="text-gray-300">Processador:</strong> ${dev.chip}</p>
+                                    <p><strong class="text-gray-300">Memória:</strong> ${dev.ram}</p>
+                                    <p><strong class="text-gray-300">Bateria:</strong> ${dev.battery}</p>
+                                </div>
+                            </div>
+                            <button onclick="openDeviceModal(${dev.id})" class="w-full bg-darkbg hover:bg-gray-800 border border-gray-700 text-white font-semibold py-2.5 rounded-xl text-sm transition flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-book-open text-accent"></i>
+                                <span>Ver Ficha & Guia de Manutenção</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Filtro por Marca
+        function filterByBrand(brand) {
+            document.querySelectorAll('.brand-btn').forEach(btn => {
+                btn.classList.remove('bg-accent', 'text-white', 'active-brand');
+                btn.classList.add('bg-cardbg', 'text-gray-300');
+            });
+            event.target.classList.remove('bg-cardbg', 'text-gray-300');
+            event.target.classList.add('bg-accent', 'text-white', 'active-brand');
+
+            if (brand === 'all') {
+                renderDevices(devicesData);
+            } else {
+                const filtered = devicesData.filter(d => d.brand.toLowerCase() === brand.toLowerCase());
+                renderDevices(filtered);
+            }
+        }
+
+        // Busca Global
+        function filterDevices() {
+            const query = document.getElementById('globalSearch').value.toLowerCase();
+            const filtered = devicesData.filter(d => d.name.toLowerCase().includes(query) || d.brand.toLowerCase().includes(query) || d.chip.toLowerCase().includes(query));
+            renderDevices(filtered);
+            showSection('home');
+        }
+
+        // Modal Detalhes do Aparelho & Manutenção
+        function openDeviceModal(id) {
+            const dev = devicesData.find(d => d.id === id);
+            if (!dev) return;
+
+            let stepsHtml = '';
+            dev.steps.forEach((step, index) => {
+                stepsHtml += `
+                    <div class="flex items-start space-x-3 bg-darkbg p-3.5 rounded-xl border border-gray-800">
+                        <span class="w-6 h-6 rounded-full bg-accent text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">${index + 1}</span>
+                        <p class="text-sm text-gray-300 leading-relaxed">${step}</p>
+                    </div>
+                `;
+            });
+
+            document.getElementById('modalContent').innerHTML = `
+                <div class="flex items-center space-x-4 border-b border-gray-800 pb-4">
+                    <img src="${dev.image}" alt="${dev.name}" class="w-16 h-16 object-cover rounded-xl border border-gray-700">
+                    <div>
+                        <span class="text-xs font-semibold text-accent uppercase tracking-wider">${dev.brand}</span>
+                        <h2 class="text-xl md:text-2xl font-bold text-white">${dev.name}</h2>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400"><i class="fa-solid fa-microchip text-accent mr-2"></i> Ficha Técnica</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-darkbg p-4 rounded-xl border border-gray-800">
+                        <p><strong class="text-gray-300">Chipset:</strong> ${dev.chip}</p>
+                        <p><strong class="text-gray-300">RAM:</strong> ${dev.ram}</p>
+                        <p><strong class="text-gray-300">Bateria:</strong> ${dev.battery}</p>
+                        <p><strong class="text-gray-300">Câmera:</strong> ${dev.camera}</p>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400"><i class="fa-solid fa-screwdriver-wrench text-accent mr-2"></i> Ferramentas Necessárias</h3>
+                    <p class="text-xs bg-darkbg p-3.5 rounded-xl border border-gray-800 text-gray-300">${dev.tools}</p>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400"><i class="fa-solid fa-list-check text-accent mr-2"></i> Passo a Passo de Manutenção</h3>
+                    <div class="space-y-2">
+                        ${stepsHtml}
+                    </div>
+                </div>
+            `;
+            document.getElementById('deviceModal').classList.remove('hidden');
+            document.getElementById('deviceModal').classList.add('flex');
+        }
+
+        function closeDeviceModal() {
+            document.getElementById('deviceModal').classList.remove('flex');
+            document.getElementById('deviceModal').classList.add('hidden');
+        }
+
+        // Renderizar Ferramental
+        function renderTools() {
+            const grid = document.getElementById('toolsGrid');
+            grid.innerHTML = '';
+            toolsData.forEach(tool => {
+                grid.innerHTML += `
+                    <div class="bg-cardbg border border-gray-800 p-6 rounded-2xl space-y-3 shadow-xl">
+                        <div class="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center text-accent text-xl">
+                            <i class="fa-solid ${tool.icon}"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">${tool.name}</h3>
+                        <p class="text-sm text-gray-400 leading-relaxed">${tool.desc}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // Simulador de Orçamento
+        function calculateBudget() {
+            const costPart = parseFloat(document.getElementById('costPart').value) || 0;
+            const costHours = parseFloat(document.getElementById('costHours').value) || 0;
+            const hourRate = parseFloat(document.getElementById('hourRate').value) || 0;
+            const profitMargin = parseFloat(document.getElementById('profitMargin').value) || 0;
+
+            const laborCost = costHours * hourRate;
+            const totalCost = costPart + laborCost;
+            const profit = totalCost * (profitMargin / 100);
+            const suggestedPrice = totalCost + profit;
+
+            const resDiv = document.getElementById('budgetResult');
+            resDiv.classList.remove('hidden');
+            resDiv.innerHTML = `
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-400">Custo Total (Peça + Mão de Obra):</span>
+                    <span class="font-bold text-white">R$ ${totalCost.toFixed(2)}</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-400">Lucro Estimado (${profitMargin}%):</span>
+                    <span class="font-bold text-green-400">R$ ${profit.toFixed(2)}</span>
+                </div>
+                <div class="border-t border-gray-700 pt-2 flex justify-between text-base">
+                    <span class="font-bold text-white">Preço Sugerido ao Cliente:</span>
+                    <span class="font-black text-accent text-lg">R$ ${suggestedPrice.toFixed(2)}</span>
+                </div>
+            `;
+        }
+
+        // Renderizar Estoque
+        function renderInventory() {
+            const tbody = document.getElementById('inventoryTableBody');
+            tbody.innerHTML = '';
+            inventoryData.forEach(item => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-gray-900/40 transition">
+                        <td class="p-4 font-semibold text-white">${item.name}</td>
+                        <td class="p-4 text-gray-300">${item.model}</td>
+                        <td class="p-4"><span class="bg-accent/20 text-accent font-bold px-2.5 py-1 rounded-lg text-xs">${item.qty} un.</span></td>
+                        <td class="p-4 text-gray-300">R$ ${item.price.toFixed(2)}</td>
+                        <td class="p-4">
+                            <button onclick="removePart(${item.id})" class="text-gray-500 hover:text-accent transition"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function openAddPartModal() {
+            document.getElementById('partModal').classList.remove('hidden');
+            document.getElementById('partModal').classList.add('flex');
+        }
+
+        function closeAddPartModal() {
+            document.getElementById('partModal').classList.remove('flex');
+            document.getElementById('partModal').classList.add('hidden');
+        }
+
+        function saveNewPart() {
+            const name = document.getElementById('partName').value;
+            const model = document.getElementById('partModel').value;
+            const qty = parseInt(document.getElementById('partQty').value) || 1;
+            const price = parseFloat(document.getElementById('partPrice').value) || 0;
+
+            if (!name || !model) {
+                alert('Preencha os campos obrigatórios.');
+                return;
+            }
+
+            inventoryData.push({
+                id: inventoryData.length + 1,
+                name,
+                model,
+                qty,
+                price
+            });
+
+            document.getElementById('partName').value = '';
+            document.getElementById('partModel').value = '';
+            document.getElementById('partQty').value = '1';
+            document.getElementById('partPrice').value = '';
+
+            closeAddPartModal();
+            renderInventory();
+        }
+
+        function removePart(id) {
+            inventoryData = inventoryData.filter(i => i.id !== id);
+            renderInventory();
+        }
+
+        // Inicialização
+        window.onload = function() {
+            renderDevices(devicesData);
+            renderTools();
+            renderInventory();
+        };
+    </script>
+</body>
+</html>
