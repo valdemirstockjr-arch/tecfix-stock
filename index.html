@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tecfix Stock - Manual Completo de Bancada</title>
+    <title>Tecfix Stock - Manual Definitivo de Bancada</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -75,7 +75,7 @@
                 <div class="max-w-2xl relative z-10 space-y-4">
                     <span class="bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Biblioteca Técnica Multimarcas</span>
                     <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white">Manual Completo de Troca de Peças e Manutenção</h2>
-                    <p class="text-gray-300 text-sm md:text-base">Acesse fichas técnicas, procedimentos de remoção de tampas traseiras, cortes de energia de bateria e guias de troca para todas as linhas de smartphones.</p>
+                    <p class="text-gray-300 text-sm md:text-base">Acesse fichas técnicas, procedimentos ilustrados de remoção de tampas traseiras, desparafusamento e guias de troca para todas as linhas de smartphones.</p>
                     <div class="flex flex-wrap gap-4 pt-2">
                         <button onclick="filterByBrand('all')" class="bg-accent hover:bg-accenthover text-white font-semibold px-6 py-3 rounded-xl transition shadow-lg shadow-accent/20">Ver Todas as Linhas</button>
                         <button onclick="showSection('about')" class="bg-gray-800 hover:bg-gray-700 text-gray-200 font-semibold px-6 py-3 rounded-xl transition">Sobre o Tecfix Stock</button>
@@ -257,13 +257,13 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Matriz Expandida Abrangendo Todas as Linhas de Aparelhos com Fotos Isoladas e Guias de Abertura de Tampa/Display
+        // Matriz Definitiva com Imagens de Aparelhos e Ilustrações de Manutenção de Bancada Dedicadas
         const devicesData = [
             // ==================== APPLE IPHONES ====================
             {
                 id: 1, brand: "Apple", name: "iPhone 16 Pro Max", chip: "Apple A18 Pro", ram: "8 GB", battery: "4685 mAh",
                 image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80", // Ilustração profissional de bancada/reparo com ferramentas
                 tools: "Chave Pentalobe 0.8mm, Separadora térmica a 75°C, Ventosa, Espátula",
                 checklist: [
                     "PASSO 1 - ABERTURA: Desligue o aparelho, remova os parafusos Pentalobe inferiores e aqueça na separadora a 75°C. Abra a tela para a DIREITA como um livro.",
@@ -276,7 +276,7 @@
             {
                 id: 2, brand: "Apple", name: "iPhone 15 Pro", chip: "Apple A17 Pro", ram: "8 GB", battery: "3274 mAh",
                 image: "https://images.unsplash.com/photo-1695048065051-7f9191e7798b?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Separadora térmica, Ventosa",
                 checklist: [
                     "PASSO 1 - ABERTURA: Remova os parafusos da base USB-C, aqueça a tela e abra para a direita.",
@@ -289,7 +289,7 @@
             {
                 id: 3, brand: "Apple", name: "iPhone 14", chip: "Apple A15 Bionic", ram: "6 GB", battery: "3279 mAh",
                 image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Soprador térmico, Ventosa",
                 checklist: [
                     "PASSO 1 - ABERTURA: Retire os parafusos inferiores, aqueça as bordas com soprador e puxe o display com ventosa.",
@@ -301,7 +301,7 @@
             {
                 id: 4, brand: "Apple", name: "iPhone 13", chip: "Apple A15 Bionic", ram: "4 GB", battery: "3240 mAh",
                 image: "https://images.unsplash.com/photo-1591337676887-a217a6970a8a?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Soprador térmico, Espátula",
                 checklist: [
                     "PASSO 1 - ABERTURA: Remova parafusos da base, aqueça o vidro frontal e abra para a direita.",
@@ -313,7 +313,7 @@
             {
                 id: 5, brand: "Apple", name: "iPhone 11", chip: "Apple A13 Bionic", ram: "4 GB", battery: "3110 mAh",
                 image: "https://images.unsplash.com/photo-1573148192850-84096f4ef64a?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1530319067432-f2a729c03db5?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Soprador térmico, Ventosa",
                 checklist: [
                     "PASSO 1 - ABERTURA: Tire os parafusos Pentalobe, aqueça as bordas e abra a tela lateralmente.",
@@ -325,7 +325,7 @@
             {
                 id: 6, brand: "Apple", name: "iPhone 8", chip: "Apple A11 Bionic", ram: "2 GB", battery: "1821 mAh",
                 image: "https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
                 tools: "Chave Pentalobe, Chave Phillips, Soprador",
                 checklist: [
                     "PASSO 1 - ABERTURA (CUIDADO BOTÃO HOME): Aqueça e abra para a direita. Cuidado com o flex do Touch ID.",
@@ -339,7 +339,7 @@
             {
                 id: 7, brand: "Samsung", name: "Galaxy S24 Ultra", chip: "Snapdragon 8 Gen 3", ram: "12 GB", battery: "5000 mAh",
                 image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
                 tools: "Separadora térmica a 80°C, Ventosa, Chave Phillips 00, Espátula",
                 checklist: [
                     "PASSO 1 - REMOÇÃO DA TAMPA TRASEIRA: Retire a S-Pen e o chip. Aqueça na separadora a 80°C por 3 min. Use ventosa e espátula para descolar a tampa traseira de vidro (cuidado com o flex do carregador sem fio no meio).",
@@ -352,7 +352,7 @@
             {
                 id: 8, brand: "Samsung", name: "Galaxy S23+", chip: "Snapdragon 8 Gen 2", ram: "8 GB", battery: "4700 mAh",
                 image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Ventosa, Espátula",
                 checklist: [
                     "PASSO 1 - ABERTURA DA TAMPA TRASEIRA: Aqueça a tampa traseira de vidro com o soprador, insira a ventosa e levante com cuidado.",
@@ -364,7 +364,7 @@
             {
                 id: 9, brand: "Samsung", name: "Galaxy S22", chip: "Snapdragon 8 Gen 1", ram: "8 GB", battery: "3700 mAh",
                 image: "https://images.unsplash.com/photo-1610945264803-c22b64d2a7b3?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Ventosa, Chave Phillips",
                 checklist: [
                     "PASSO 1 - ABERTURA TRASEIRA: Aqueça as bordas traseiras e remova a tampa de vidro com ventosa.",
@@ -376,7 +376,7 @@
             {
                 id: 10, brand: "Samsung", name: "Galaxy A55", chip: "Exynos 1480", ram: "8 GB", battery: "5000 mAh",
                 image: "https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Espátula de nylon, Chave Phillips",
                 checklist: [
                     "PASSO 1 - ABERTURA DA TAMPA TRASEIRA: Aqueça a tampa traseira plástica/vidro, insira a espátula e abra lateralmente.",
@@ -388,7 +388,7 @@
             {
                 id: 11, brand: "Samsung", name: "Galaxy A34", chip: "MediaTek Dimensity 1080", ram: "8 GB", battery: "5000 mAh",
                 image: "https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Espátula plástica",
                 checklist: [
                     "PASSO 1 - ABERTURA TRASEIRA: Aqueça as bordas e retire a tampa traseira com cuidado.",
@@ -400,7 +400,7 @@
             {
                 id: 12, brand: "Samsung", name: "Galaxy A15", chip: "MediaTek Helio G99", ram: "4 GB", battery: "5000 mAh",
                 image: "https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Chave Phillips",
                 checklist: [
                     "PASSO 1 - ABERTURA: Aqueça a tampa traseira plástica e desencaixe as travas perimetrais.",
@@ -414,7 +414,7 @@
             {
                 id: 13, brand: "Motorola", name: "Motorola Edge 50 Pro", chip: "Snapdragon 7 Gen 3", ram: "12 GB", battery: "4500 mAh",
                 image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Chave Torx T3, Espátula",
                 checklist: [
                     "PASSO 1 - ABERTURA DA TAMPA TRASEIRA: Aqueça a tampa traseira de vidro curvo. CUIDADO: Desencaixe o cabo flex da biometria preso na tampa antes de puxá-la.",
@@ -426,7 +426,7 @@
             {
                 id: 14, brand: "Motorola", name: "Moto G84 5G", chip: "Snapdragon 695", ram: "8 GB", battery: "5000 mAh",
                 image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Chave Phillips, Espátula",
                 checklist: [
                     "PASSO 1 - ABERTURA TRASEIRA: Aqueça o perímetro traseiro e passe a espátula plástica para remover a tampa.",
@@ -438,7 +438,7 @@
             {
                 id: 15, brand: "Motorola", name: "Moto G54", chip: "MediaTek Dimensity 7020", ram: "8 GB", battery: "6000 mAh",
                 image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Chave Phillips",
                 checklist: [
                     "PASSO 1 - ABERTURA: Aqueça a tampa traseira e abra com espátula.",
@@ -450,7 +450,7 @@
             {
                 id: 16, brand: "Motorola", name: "Moto G24", chip: "MediaTek Helio G85", ram: "4 GB", battery: "5000 mAh",
                 image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Espátula",
                 checklist: [
                     "PASSO 1 - ABERTURA: Aqueça levemente e desencaixe a tampa traseira plástica.",
@@ -464,7 +464,7 @@
             {
                 id: 17, brand: "Xiaomi", name: "Xiaomi 14 Ultra", chip: "Snapdragon 8 Gen 3", ram: "16 GB", battery: "5000 mAh",
                 image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Kit chaves Xiaomi, Ventosa",
                 checklist: [
                     "PASSO 1 - ABERTURA DA TAMPA TRASEIRA: Remova a gaveta do chip, aqueça a tampa traseira Leica uniformemente e puxe com ventosa para descolar.",
@@ -476,7 +476,7 @@
             {
                 id: 18, brand: "Xiaomi", name: "Redmi Note 13 Pro", chip: "Snapdragon 7s Gen 2", ram: "8 GB", battery: "5100 mAh",
                 image: "https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Chave Phillips, Espátula",
                 checklist: [
                     "PASSO 1 - ABERTURA: Aqueça a tampa traseira e remova com ventosa e palheta.",
@@ -488,7 +488,7 @@
             {
                 id: 19, brand: "Xiaomi", name: "Poco X6 Pro", chip: "MediaTek Dimensity 8300", ram: "8 GB", battery: "5000 mAh",
                 image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Chave Phillips",
                 checklist: [
                     "PASSO 1 - ABERTURA: Aqueça as bordas traseiras e remova a tampa.",
@@ -500,7 +500,7 @@
             {
                 id: 20, brand: "Xiaomi", name: "Redmi 13C", chip: "MediaTek Helio G85", ram: "4 GB", battery: "5000 mAh",
                 image: "https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Espátula",
                 checklist: [
                     "PASSO 1 - ABERTURA: Aqueça levemente e desencaixe a tampa traseira.",
@@ -514,7 +514,7 @@
             {
                 id: 21, brand: "LG", name: "LG Velvet 5G", chip: "Snapdragon 765G", ram: "6 GB", battery: "4300 mAh",
                 image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Ventosa, Chave Phillips",
                 checklist: [
                     "PASSO 1 - ABERTURA DA TAMPA TRASEIRA: Remova a bandeja SIM, aqueça a tampa traseira de vidro curvado e descole com ventosa e espátula.",
@@ -526,7 +526,7 @@
             {
                 id: 22, brand: "LG", name: "LG K62", chip: "MediaTek Helio P35", ram: "4 GB", battery: "4000 mAh",
                 image: "https://images.unsplash.com/photo-1526406915894-7bcd65f60845?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Chave Phillips, Espátula",
                 checklist: [
                     "PASSO 1 - ABERTURA: Aqueça levemente a tampa traseira plástica e desencaixe as presilhas laterais.",
@@ -538,7 +538,7 @@
             {
                 id: 23, brand: "LG", name: "LG K52", chip: "MediaTek Helio P35", ram: "4 GB", battery: "4000 mAh",
                 image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80",
-                stepImg: "https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?auto=format&fit=crop&w=600&q=80",
+                stepImg: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
                 tools: "Soprador térmico, Chave Phillips",
                 checklist: [
                     "PASSO 1 - ABERTURA: Aqueça e desencaixe a tampa traseira plástica.",
@@ -646,7 +646,7 @@
             showSection('home');
         }
 
-        // Modal do Manual Detalhado
+        // Modal do Manual Detalhado com Ilustração Técnica de Bancada
         function openDeviceModal(id) {
             const dev = devicesData.find(d => d.id === id);
             if (!dev) return;
@@ -686,13 +686,13 @@
                     <p class="text-xs bg-darkbg p-3.5 rounded-xl border border-gray-800 text-gray-300">${dev.tools}</p>
                 </div>
 
-                <!-- GUIA VISUAL DE ABERTURA DA TAMPA / BANCADA -->
+                <!-- ILUSTRAÇÃO TÉCNICA DE REMOÇÃO DE TAMPA E BANCADA -->
                 <div class="space-y-3">
-                    <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400"><i class="fa-solid fa-image text-accent mr-2"></i> Guia Visual: Remoção de Tampa / Display</h3>
-                    <div class="rounded-xl overflow-hidden border border-gray-800 h-56 bg-gray-900 relative">
-                        <img src="${dev.stepImg}" alt="Guia de abertura do ${dev.name}" class="w-full h-full object-cover opacity-90">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400"><i class="fa-solid fa-image text-accent mr-2"></i> Guia Ilustrado: Remoção de Tampa Traseira e Parafusos</h3>
+                    <div class="rounded-xl overflow-hidden border border-gray-800 h-60 bg-gray-900 relative">
+                        <img src="${dev.stepImg}" alt="Ilustração técnica de bancada" class="w-full h-full object-cover opacity-90">
                         <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-darkbg via-darkbg/80 to-transparent p-3 text-center">
-                            <span class="text-xs text-gray-200 font-semibold"><i class="fa-solid fa-eye text-accent mr-1"></i> Referência visual de bancada para o procedimento no ${dev.name}</span>
+                            <span class="text-xs text-gray-200 font-semibold"><i class="fa-solid fa-wrench text-accent mr-1"></i> Ilustração prática de bancada: abertura de tampa e acesso interno no ${dev.name}</span>
                         </div>
                     </div>
                 </div>
