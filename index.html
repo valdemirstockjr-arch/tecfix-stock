@@ -47,4 +47,265 @@
                     <h1 class="text-xl font-extrabold tracking-tight text-white flex items-center gap-2">
                         TecFix <span class="text-emerald-400">Stock</span>
                     </h1>
-                    <p class="text-xs text
+                    <p class="text-xs text-slate-400">Guia Fotográfico de Bancada para Manutenção</p>
+                </div>
+            </div>
+
+            <!-- BUSCA RÁPIDA -->
+            <div class="flex-1 max-w-md mx-2">
+                <div class="relative">
+                    <input type="text" id="searchInput" oninput="filterModels()" placeholder="Buscar celular (ex: A52, iPhone 11, G60)..." class="w-full bg-slate-800 border border-slate-700 text-slate-200 text-sm rounded-xl pl-10 pr-4 py-2 focus:outline-none focus:border-emerald-500 transition">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-500 text-sm"></i>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Sistema Ativo
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <main class="max-w-7xl mx-auto px-4 py-6 w-full flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- PAINEL ESQUERDO: MARCAS E SELEÇÃO DE APARELHO -->
+        <section class="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col h-[750px]">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-emerald-400"></i> Selecionar Fabricante
+            </h2>
+            
+            <!-- Abas de Marcas -->
+            <div class="flex overflow-x-auto gap-2 pb-2 mb-3 custom-scrollbar border-b border-slate-800 shrink-0" id="brandTabs">
+                <button onclick="selectBrand('samsung')" class="brand-tab px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500 text-slate-950 transition shrink-0 active" data-brand="samsung">Samsung</button>
+                <button onclick="selectBrand('apple')" class="brand-tab px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition shrink-0" data-brand="apple">Apple</button>
+                <button onclick="selectBrand('motorola')" class="brand-tab px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition shrink-0" data-brand="motorola">Motorola</button>
+                <button onclick="selectBrand('xiaomi')" class="brand-tab px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition shrink-0" data-brand="xiaomi">Xiaomi</button>
+                <button onclick="selectBrand('lg')" class="brand-tab px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition shrink-0" data-brand="lg">LG</button>
+                <button onclick="selectBrand('asus')" class="brand-tab px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition shrink-0" data-brand="asus">ASUS</button>
+                <button onclick="selectBrand('realme')" class="brand-tab px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition shrink-0" data-brand="realme">Realme</button>
+            </div>
+
+            <!-- Lista de Modelos -->
+            <div class="flex-y-auto overflow-y-auto space-y-2 custom-scrollbar pr-1 flex-grow" id="modelList">
+                <!-- Preenchido via JavaScript -->
+            </div>
+        </section>
+
+        <!-- PAINEL DIREITO: GUIA FOTOGRÁFICO PASSO A PASSO -->
+        <section class="lg:col-span-8 bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col h-[750px] relative">
+            
+            <!-- Cabeçativo do Aparelho Selecionado -->
+            <div id="deviceHeader" class="flex flex-wrap justify-between items-center pb-4 mb-4 border-b border-slate-800 shrink-0">
+                <div>
+                    <span id="deviceCategory" class="text-xs font-semibold px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Selecione um aparelho</span>
+                    <h2 id="deviceName" class="text-xl font-black text-white mt-1">Nenhum modelo selecionado</h2>
+                </div>
+                <div id="deviceSpecs" class="flex gap-2 text-xs text-slate-400 mt-2 sm:mt-0">
+                    <!-- Info técnica rápida -->
+                </div>
+            </div>
+
+            <!-- Visualizador Fotográfico de Bancada (Passos) -->
+            <div class="flex-grow overflow-y-auto custom-scrollbar pr-1 space-y-4" id="repairStepsContainer">
+                <div class="flex flex-col items-center justify-center h-full text-center text-slate-500 p-6">
+                    <i class="fa-solid fa-mobile-screen-button text-5xl mb-3 text-slate-600"></i>
+                    <p class="text-sm font-medium">Escolha um modelo na lista ao lado para carregar o manual fotográfico detalhado de bancada.</p>
+                </div>
+            </div>
+
+            <!-- Rodapé do Guia / Navegação de Passos -->
+            <div id="stepFooter" class="pt-4 mt-4 border-t border-slate-800 flex justify-between items-center text-xs text-slate-400 shrink-0 hidden">
+                <span id="stepCounter">Passo 1 de 4</span>
+                <div class="flex gap-2">
+                    <button onclick="prevStep()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition font-medium"><i class="fa-solid fa-arrow-left mr-1"></i> Anterior</button>
+                    <button onclick="nextStep()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold rounded-lg transition">Próximo <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- RODAPÉ INSTITUCIONAL COM HOMENAGEM -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-4 mt-6 text-center text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <p>© 2026 <strong class="text-white">TecFix Stock</strong> — Desenvolvido para Bancadas Técnicas.</p>
+            <p class="text-emerald-400 font-medium"><i class="fa-solid fa-heart mr-1"></i> Homenagem Especial aos Fundadores: <span class="text-white font-bold">Valdemir Stock</span> & <span class="text-white font-bold">Wesley Nunes Stock</span></p>
+        </div>
+    </footer>
+
+    <!-- BASE DE DADOS E LÓGICA DO SISTEMA -->
+    <script>
+        const repairDatabase = {
+            samsung: [
+                {
+                    id: 's21', name: 'Galaxy S21 5G', temp: '80°C', tools: 'Chave Philips #00, Espátula Plástica, Álcool Isopropílico',
+                    steps: [
+                        { title: 'Remoção da Tampa Traseira', desc: 'Aquecer a borda traseira a 80°C por 3 minutos. Introduzir a ventosa e a espátula de plástico com cuidado para descolar a tampa plástica.', img: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80' },
+                        { title: 'Blindagem da Placa Mãe', desc: 'Remover os 9 parafusos Philips que fixam a blindagem superior. Desconectar a bateria imediatamente antes de qualquer outro conector.', img: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80' },
+                        { title: 'Substituição da Tela / Display', desc: 'Desconectar o flex do display na placa inferior. Aquecer a frontal a 85°C por 5 minutos para remover o display defeituoso e limpar bem a canaleta.', img: 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=600&q=80' }
+                    ]
+                },
+                {
+                    id: 'a52', name: 'Galaxy A52 / A52s', temp: '80°C', tools: 'Pinça antiestática, Espátula, Chave Philips',
+                    steps: [
+                        { title: 'Abertura Traseira', desc: 'Aplicar calor na tampa traseira. Descolar com ventosa e palheta plástica com cuidado com o flex do leitor biométrico se houver.', img: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80' },
+                        { title: 'Desconexão de Bateria', desc: 'Soltar os parafusos da proteção da bateria e isolar o circuito de alimentação.', img: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80' }
+                    ]
+                }
+            ],
+            apple: [
+                {
+                    id: 'ip11', name: 'iPhone 11', temp: '70°C', tools: 'Chave Pentalobe 0.8, Chave Tri-point Y000, Ventosa',
+                    steps: [
+                        { title: 'Remoção dos Parafusos Pentalobe', desc: 'Retirar os dois parafusos inferiores ao lado do conector Lightning.', img: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=600&q=80' },
+                        { title: 'Abertura Lateral da Tela', desc: 'Aquecer levemente as bordas. Abrir o aparelho como um livro para o lado direito, pois os flexíveis ficam à esquerda.', img: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=600&q=80' },
+                        { title: 'Blindagem de Bateria e Tela', desc: 'Desaparafusar a placa protetora dos conectores e remover primeiro a bateria.', img: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80' }
+                    ]
+                }
+            ],
+            motorola: [
+                {
+                    id: 'g60', name: 'Moto G60', temp: '80°C', tools: 'Chave Philips, Espátula, Estação de Calor',
+                    steps: [
+                        { title: 'Remoção da Tampa Traseira', desc: 'Cuidado com o cabo flex do leitor de impressão digital localizado na tampa traseira.', img: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80' },
+                        { title: 'Desconexão da Bateria', desc: 'Remover a proteção metálica e soltar o conector da bateria com espátula plástica.', img: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80' }
+                    ]
+                }
+            ],
+            xiaomi: [
+                {
+                    id: 'note10', name: 'Redmi Note 10 / 10 Pro', temp: '85°C', tools: 'Ventosa, Espátula de metal fina, Chave Philips',
+                    steps: [
+                        { title: 'Aquecimento e Abertura', desc: 'Tampa traseira em vidro colada. Aplicar calor uniforme a 85°C e introduzir lâmina de abertura fina.', img: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80' },
+                        { title: 'Desconexão de Placa', desc: 'Remover parafusos da tampa superior e inferior (placa de carga e alto-falante).', img: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80' }
+                    ]
+                }
+            ],
+            lg: [
+                { id: 'k52', name: 'LG K52', temp: '75°C', tools: 'Espátula, Philips #00', steps: [{ title: 'Abertura Traseira', desc: 'Aquecer e descolar tampa traseira plástica com cuidado.', img: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80' }] }
+            ],
+            asus: [
+                { id: 'zenfone5', name: 'Zenfone 5 (2018)', temp: '80°C', tools: 'Chave Philips, Pinça', steps: [{ title: 'Remoção do vidro traseiro', desc: 'Aquecer bordas e desconectar biometria.', img: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80' }] }
+            ],
+            realme: [
+                { id: 'narzo', name: 'Realme Narzo 50 / 70', temp: '80°C', tools: 'Kit Bancada Padrão', steps: [{ title: 'Desmontagem', desc: 'Remover gaveta de SIM e abrir tampa traseira com ventosa.', img: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80' }] }
+            ]
+        };
+
+        let currentBrand = 'samsung';
+        let currentDevice = null;
+        let currentStepIndex = 0;
+
+        function selectBrand(brand) {
+            currentBrand = brand;
+            document.querySelectorAll('.brand-tab').forEach(btn => {
+                if(btn.dataset.brand === brand) {
+                    btn.className = "brand-tab px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500 text-slate-950 transition shrink-0 active";
+                } else {
+                    btn.className = "brand-tab px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition shrink-0";
+                }
+            });
+            renderModelList();
+        }
+
+        function renderModelList(filter = '') {
+            const listContainer = document.getElementById('modelList');
+            listContainer.innerHTML = '';
+            
+            let models = repairDatabase[currentBrand] || [];
+            if(filter) {
+                models = [];
+                Object.values(repairDatabase).forEach(brandList => {
+                    brandList.forEach(m => {
+                        if(m.name.toLowerCase().includes(filter.toLowerCase())) {
+                            models.push(m);
+                        }
+                    });
+                });
+            }
+
+            if(models.length === 0) {
+                listContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-6">Nenhum modelo encontrado.</p>`;
+                return;
+            }
+
+            models.forEach(model => {
+                const item = document.createElement('div');
+                item.className = "p-3 bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 hover:border-emerald-500/50 rounded-xl cursor-pointer transition flex justify-between items-center group";
+                item.innerHTML = `
+                    <div>
+                        <h4 class="text-xs font-bold text-white group-hover:text-emerald-400 transition">${model.name}</h4>
+                        <span class="text-[10px] text-slate-400">Temp: ${model.temp}</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-xs text-slate-600 group-hover:text-emerald-400 transition"></i>
+                `;
+                item.onclick = () => loadDevice(model);
+                listContainer.appendChild(item);
+            });
+        }
+
+        function loadDevice(model) {
+            currentDevice = model;
+            currentStepIndex = 0;
+
+            document.getElementById('deviceCategory').innerText = currentBrand.toUpperCase();
+            document.getElementById('deviceName').innerText = model.name;
+            document.getElementById('deviceSpecs').innerHTML = `
+                <span class="bg-slate-800 px-2.5 py-1 rounded-md border border-slate-700"><i class="fa-solid fa-temperature-high text-amber-400 mr-1"></i> ${model.temp}</span>
+                <span class="bg-slate-800 px-2.5 py-1 rounded-md border border-slate-700"><i class="fa-solid fa-toolbox text-emerald-400 mr-1"></i> ${model.tools}</span>
+            `;
+
+            document.getElementById('stepFooter').classList.remove('hidden');
+            renderStep();
+        }
+
+        function renderStep() {
+            if(!currentDevice) return;
+            const step = currentDevice.steps[currentStepIndex];
+            const container = document.getElementById('repairStepsContainer');
+            
+            document.getElementById('stepCounter').innerText = `Passo ${currentStepIndex + 1} de ${currentDevice.steps.length}`;
+
+            container.innerHTML = `
+                <div class="space-y-4 animate-fade">
+                    <div class="relative rounded-xl overflow-hidden border border-slate-800 bg-slate-950 aspect-video max-h-[360px] flex items-center justify-center">
+                        <img src="${step.img}" alt="${step.title}" class="w-full h-full object-cover">
+                        <div class="absolute bottom-2 left-2 bg-slate-950/80 backdrop-blur-md px-3 py-1 rounded-lg border border-slate-700 text-xs font-bold text-emerald-400">
+                            Passo ${currentStepIndex + 1}
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-white mb-1">${step.title}</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed bg-slate-800/40 p-3.5 rounded-xl border border-slate-800">${step.desc}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function nextStep() {
+            if(!currentDevice) return;
+            if(currentStepIndex < currentDevice.steps.length - 1) {
+                currentStepIndex++;
+                renderStep();
+            }
+        }
+
+        function prevStep() {
+            if(!currentDevice) return;
+            if(currentStepIndex > 0) {
+                currentStepIndex--;
+                renderStep();
+            }
+        }
+
+        function filterModels() {
+            const query = document.getElementById('searchInput').value;
+            renderModelList(query);
+        }
+
+        // Inicializar com Samsung selecionado
+        selectBrand('samsung');
+    </script>
+</body>
+</html>
